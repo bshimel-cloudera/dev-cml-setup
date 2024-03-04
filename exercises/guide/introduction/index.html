@@ -1,0 +1,448 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Cloudera Education" name="author"/>
+<link href="../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.3.0, mkdocs-material-8.5.4" name="generator"/>
+<title>Introduction to CML on CDP - DSCI-272: Predicting with Cloudera Machine Learning</title>
+<link href="../assets/stylesheets/main.80dcb947.min.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            
+                .gscrollbar-fixer { padding-right: 15px; }
+                .gdesc-inner { font-size: 0.75rem; }
+                body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+                body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+                body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
+                </style><script src="../assets/javascripts/glightbox.min.js"></script></head>
+<body data-md-color-accent="none" data-md-color-primary="none" data-md-color-scheme="default" dir="ltr">
+<script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#introduction-to-cml-on-cdp">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="DSCI-272: Predicting with Cloudera Machine Learning" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="DSCI-272: Predicting with Cloudera Machine Learning">
+<img alt="logo" src="../assets/logo-cloudera-white.svg"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            DSCI-272: Predicting with Cloudera Machine Learning
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Introduction to CML on CDP
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="none" data-md-color-media="" data-md-color-primary="none" data-md-color-scheme="default" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_2" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"></path></svg>
+</label>
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="pink" data-md-color-media="" data-md-color-primary="pink" data-md-color-scheme="slate" id="__palette_2" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"></path></svg>
+</label>
+</form>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="DSCI-272: Predicting with Cloudera Machine Learning" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="DSCI-272: Predicting with Cloudera Machine Learning">
+<img alt="logo" src="../assets/logo-cloudera-white.svg"/>
+</a>
+    DSCI-272: Predicting with Cloudera Machine Learning
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+        Home
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Introduction to CML on CDP
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="index.html">
+        Introduction to CML on CDP
+      </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#login-to-cloudera-data-platform">
+    Login to Cloudera Data Platform
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#overview-of-cml-workspace">
+    Overview of CML Workspace
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#project-and-session-overview">
+    Project and Session Overview
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../streamlit/index.html">
+        Streamlit on CML
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data_access/index.html">
+        Data - Access, Audit, and Mask
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data_visualization/index.html">
+        Visualize Duocar Data
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../experiment_tracking/index.html">
+        Experiment Tracking
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../workbench/index.html">
+        Workbench Lecture and Exercises
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autoscaling/index.html">
+        Autoscaling, Performance, and GPU Settings
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../model_monitoring/index.html">
+        Continuous Model Monitoring with Evidently AI
+      </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#login-to-cloudera-data-platform">
+    Login to Cloudera Data Platform
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#overview-of-cml-workspace">
+    Overview of CML Workspace
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#project-and-session-overview">
+    Project and Session Overview
+  </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="introduction-to-cml-on-cdp">Introduction to CML on CDP</h1>
+<p>This exercise will introduce the Cloudera Data Platform (CDP) and Cloudera Machine Learning (CML).  In this exercise, you will:</p>
+<ul>
+<li>login to the Cloudera Data Platform exercise environment,</li>
+<li>view the Cloudera Machine Learning workspace,</li>
+<li>create a new CML project,</li>
+<li>create a new session,</li>
+<li>and delete a CML project.</li>
+</ul>
+<h2 id="login-to-cloudera-data-platform">Login to Cloudera Data Platform</h2>
+<ol>
+<li>
+<p>Open the <a href="https://edu-keycloak.cloudera.training/auth/realms/edu-keycloak/protocol/saml/clients/cdp-labs">Log In page for the CDP Public Cloud environment</a>
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/login-screen.png"><img alt="Login to Cloudera Data Platform" src="images/login-screen.png"/></a></p>
+</li>
+<li>
+<p>Enter the username and password provided by your instructor. Click <strong>Log In</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/username-and-password.png"><img alt="Enter Username and Password" src="images/username-and-password.png"/></a></p>
+</li>
+<li>
+<p>The Cloudera Data Platform page is displayed.  Some of the additional features of the platform will be explored in other exercises.  For now, click <strong>Machine Learning</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click-login.png"><img alt="Click Login" src="images/click-login.png"/></a></p>
+</li>
+</ol>
+<h2 id="overview-of-cml-workspace">Overview of CML Workspace</h2>
+<ol start="4">
+<li>
+<p>The list of Machine Learning workspaces is displayed.  In this case, one workspace is provisioned. Click on <strong>cml-on-cdp</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/workspace-list.png"><img alt="Workspace List" src="images/workspace-list.png"/></a></p>
+</li>
+<li>
+<p>The Projects page is displayed.  The Projects page lists all of the projects in the workspace. (Your screen will vary from the screen shown below.)
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/projects.png"><img alt="Projects" src="images/projects.png"/></a></p>
+</li>
+</ol>
+<p>The workspace has several helpful features.</p>
+<ol start="6">
+<li>
+<p>Select <strong>Learning Hub</strong> from the workspace menu.<br/>
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/select_learning_hub.png"><img alt="Select Learning Hub" src="images/select_learning_hub.png"/></a></p>
+</li>
+<li>
+<p>View the Learning Hub content.  The Learning Hub is a great resource to learn about the new features in CML and read blog posts, research reports, and documentation. 
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/view_learning_hub.png"><img alt="View Learning Hub" src="images/view_learning_hub.png"/></a></p>
+</li>
+<li>
+<p>Select <strong>Runtime Catalog</strong>.  The Runtime Catalog shows a list of available runtimes and allows new runtimes to be added.<br/>
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/select_runtime_catalog.png"><img alt="Select Runtime Catalog" src="images/select_runtime_catalog.png"/></a></p>
+</li>
+<li>
+<p>Select <strong>AMPs</strong>.  The AMPs page shows a list of availble Applied ML Prototypes (AMPs).<br/>
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/select_amps.png"><img alt="Select AMPs" src="images/select_amps.png"/></a></p>
+</li>
+<li>
+<p>Select <strong>User Settings</strong>.<br/>
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/select_user_settings.png"><img alt="Select User Settings" src="images/select_user_settings.png"/></a></p>
+</li>
+<li>
+<p>Select the <strong>Outbound SSH Key</strong> tab.  The Outbound SSH Key is used for connecting to external resources, for example Github.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/view_user_settings___outbound_ssh_key.png"><img alt="View User Settings - Outbound SSH Key" src="images/view_user_settings___outbound_ssh_key.png"/></a></p>
+</li>
+</ol>
+<p>Applications, Jobs, Models, Experiments, and Sessions will be covered later.</p>
+<h2 id="project-and-session-overview">Project and Session Overview</h2>
+<h3 id="create-a-new-project">Create a New Project</h3>
+<ol start="12">
+<li>
+<p>Select <strong>Projects</strong> from the workspace menu.</p>
+</li>
+<li>
+<p>Click the <strong>New Project</strong> button.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/select_new_project_button.png"><img alt="Select New Project button" src="images/select_new_project_button.png"/></a></p>
+</li>
+<li>
+<p>For <strong>Project Name</strong>, enter <code>Student # - First Project</code>, where # is your student number.</p>
+</li>
+<li>
+<p>Leave the following items set to their default values:</p>
+<ul>
+<li><strong>Description</strong>:  Empty</li>
+<li><strong>Project Visibility</strong>: <strong>Private</strong></li>
+<li><strong>Initial Setup</strong>: <strong>Template</strong> - <strong>Python</strong></li>
+<li><strong>Runtime setup</strong>: <strong>Basic</strong></li>
+</ul>
+</li>
+<li>
+<p>Select <strong>Python 3.9</strong> as the runtime <strong>Kernel</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Create Project</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/select_create_project_button.png"><img alt="Select Create Project button" src="images/select_create_project_button.png"/></a></p>
+</li>
+</ol>
+<h3 id="create-a-new-session">Create a New Session</h3>
+<p>After the new project is created, the project overview page is displayed and the left-hand menu displays project items instead of workspace items.  Next, create a session to interact with your project.</p>
+<ol start="18">
+<li>
+<p>Click <strong>New Session</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/select_new_session_button.png"><img alt="Select New Session button" src="images/select_new_session_button.png"/></a></p>
+</li>
+<li>
+<p>Enter <code>First Session</code> for the <strong>Session Name</strong>.</p>
+</li>
+<li>
+<p>Select <strong>JupyterLab</strong> as the <strong>Editor</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/select_jupyterlab.png"><img alt="Select JupyterLab" src="images/select_jupyterlab.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Start Session</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_start_session_button.png"><img alt="Click Start Session button" src="images/click_start_session_button.png"/></a></p>
+</li>
+<li>
+<p>Close the <strong>Connection Code Snippet</strong> dialog.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/close_the_connection_code_snippet_dialog.png"><img alt="Close the Connection Code Snippet dialog" src="images/close_the_connection_code_snippet_dialog.png"/></a></p>
+</li>
+<li>
+<p>JupyterLab in CML is displayed.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/jupyterlab_in_cml.png"><img alt="JupyterLab in CML" src="images/jupyterlab_in_cml.png"/></a></p>
+</li>
+<li>
+<p>Double-click the <code>analysis.ipynb</code> notebook to open it.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/open_analysis_ipynb_notebook.png"><img alt="Open analysis.ipynb notebook" src="images/open_analysis_ipynb_notebook.png"/></a></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This exercise is just an introduction to creating a session that uses JupyterLabs.  If you are are familar with JupyterLabs and would like to work though the analysis.ipynb notebook, be sure to uncomment <code>%pip install -r requirements.txt</code> in the first cell. </p>
+</div>
+</li>
+<li>
+<p>Click <strong>← Project</strong> to leave the session and return to the project.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/_click_return_to_project.png"><img alt=" Click return to Project" src="images/_click_return_to_project.png"/></a></p>
+</li>
+<li>
+<p>Select <strong>Sessions</strong>.<br/>
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/select_sessions.png"><img alt="Select Sessions" src="images/select_sessions.png"/></a></p>
+</li>
+<li>
+<p>The list of sessions is displayed.  Your session should be listed and show a status of <strong>Running</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/view_list_of_sessions.png"><img alt="View list of sessions" src="images/view_list_of_sessions.png"/></a></p>
+</li>
+</ol>
+<h3 id="delete-a-project">Delete a Project</h3>
+<ol start="28">
+<li>
+<p>Select Project Settings.<br/>
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/select_project_settings.png"><img alt="Select Project Settings" src="images/select_project_settings.png"/></a></p>
+</li>
+<li>
+<p>Select the <strong>Delete Project</strong> tab.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/project_settings___delete_project.png"><img alt="Project Settings - Delete Project" src="images/project_settings___delete_project.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Delete Project</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/select_delete_project_button.png"><img alt="Select Delete Project button" src="images/select_delete_project_button.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>OK</strong> to confirm.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_ok_to_confirm.png"><img alt="Click OK to confirm" src="images/click_ok_to_confirm.png"/></a></p>
+</li>
+</ol>
+<p><strong> End of Exercise </strong></p>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: Home" class="md-footer__link md-footer__link--prev" href="../index.html" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Previous
+              </span>
+              Home
+            </div>
+</div>
+</a>
+<a aria-label="Next: Streamlit on CML" class="md-footer__link md-footer__link--next" href="../streamlit/index.html" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Next
+              </span>
+              Streamlit on CML
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      Cloudera Inc. 2023
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "..", "features": ["content.code.annotate"], "search": "../assets/javascripts/workers/search.5bf1dace.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+<script src="../assets/javascripts/bundle.078830c0.min.js"></script>
+<script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
+</html>

@@ -1,0 +1,469 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Cloudera Education" name="author"/>
+<link href="../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.3.0, mkdocs-material-8.5.4" name="generator"/>
+<title>Continuous Model Monitoring with Evidently AI - DSCI-272: Predicting with Cloudera Machine Learning</title>
+<link href="../assets/stylesheets/main.80dcb947.min.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            
+                .gscrollbar-fixer { padding-right: 15px; }
+                .gdesc-inner { font-size: 0.75rem; }
+                body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+                body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+                body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
+                </style><script src="../assets/javascripts/glightbox.min.js"></script></head>
+<body data-md-color-accent="none" data-md-color-primary="none" data-md-color-scheme="default" dir="ltr">
+<script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#continuous-model-monitoring-with-evidently">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="DSCI-272: Predicting with Cloudera Machine Learning" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="DSCI-272: Predicting with Cloudera Machine Learning">
+<img alt="logo" src="../assets/logo-cloudera-white.svg"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            DSCI-272: Predicting with Cloudera Machine Learning
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Continuous Model Monitoring with Evidently AI
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="none" data-md-color-media="" data-md-color-primary="none" data-md-color-scheme="default" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_2" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"></path></svg>
+</label>
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="pink" data-md-color-media="" data-md-color-primary="pink" data-md-color-scheme="slate" id="__palette_2" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"></path></svg>
+</label>
+</form>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="DSCI-272: Predicting with Cloudera Machine Learning" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="DSCI-272: Predicting with Cloudera Machine Learning">
+<img alt="logo" src="../assets/logo-cloudera-white.svg"/>
+</a>
+    DSCI-272: Predicting with Cloudera Machine Learning
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+        Home
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../introduction/index.html">
+        Introduction to CML on CDP
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../streamlit/index.html">
+        Streamlit on CML
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data_access/index.html">
+        Data - Access, Audit, and Mask
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data_visualization/index.html">
+        Visualize Duocar Data
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../experiment_tracking/index.html">
+        Experiment Tracking
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../workbench/index.html">
+        Workbench Lecture and Exercises
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autoscaling/index.html">
+        Autoscaling, Performance, and GPU Settings
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Continuous Model Monitoring with Evidently AI
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="index.html">
+        Continuous Model Monitoring with Evidently AI
+      </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#start-the-continuous-model-monitoring-amp">
+    Start the Continuous Model Monitoring AMP
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#launch-the-price-regressor-monitoring-dashboard">
+    Launch the Price Regressor Monitoring dashboard
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#explore-drift-and-variations-in-the-model-performance">
+    Explore drift and variations in the model performance
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#identify-the-file-that-creates-the-evidently-dashboard">
+    Identify the file that creates the Evidently dashboard
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#start-the-continuous-model-monitoring-amp">
+    Start the Continuous Model Monitoring AMP
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#launch-the-price-regressor-monitoring-dashboard">
+    Launch the Price Regressor Monitoring dashboard
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#explore-drift-and-variations-in-the-model-performance">
+    Explore drift and variations in the model performance
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#identify-the-file-that-creates-the-evidently-dashboard">
+    Identify the file that creates the Evidently dashboard
+  </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="continuous-model-monitoring-with-evidently">Continuous Model Monitoring with Evidently</h1>
+<p>Monitoring a deployed machine learning model is critical to ensuring model performance over time.  CML's <a href="https://docs.cloudera.com/machine-learning/cloud/model-metrics/topics/ml-enabling-model-metrics.html">model metrics</a> combined with <a href="https://evidentlyai.com/">Evidently</a>, an open source tool for evaluating, testing, and monitoring machine learning models, is a powerful tool to combat model drift.</p>
+<p>In this exercise, you will:</p>
+<ul>
+<li>Start the Continuous Model Monitoring AMP</li>
+<li>Launch the Price Regressor Monitoring dashboard </li>
+<li>Explore drift and variations in the model performance</li>
+<li>Identify the file that creates the Evidently dashboard </li>
+<li>Experiment with Evidently reports</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The initial deployment of the AMP takes approximately 30 minutes.</p>
+</div>
+<h2 id="start-the-continuous-model-monitoring-amp">Start the Continuous Model Monitoring AMP</h2>
+<ol>
+<li>
+<p>Click <strong>AMPs</strong>
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_amps.png"><img alt="Click AMPs" src="images/click_amps.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Continuous Model Monitoring</strong> AMP
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_continous_model_monitoring.png"><img alt="Click Continuous Model Monitoring" src="images/click_continous_model_monitoring.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Configure Project</strong>
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_configure_project.png"><img alt="Click Configure Project" src="images/click_configure_project.png"/></a></p>
+</li>
+<li>
+<p>Set <strong>Dev Mode</strong> to <code>True</code>
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/set_dev_mode_to_true.png"><img alt="Set Dev Mode to True" src="images/set_dev_mode_to_true.png"/></a></p>
+</li>
+</ol>
+<div class="admonition warn">
+<p class="admonition-title">Warn</p>
+<p>You must select Python 3.7 or the AMP will fail.</p>
+</div>
+<ol start="5">
+<li>
+<p>Select <strong>Python 3.7</strong>
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/select_python_version.png"><img alt="Select Python 3.7" src="images/select_python_version.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Launch Project</strong>
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_launch_project.png"><img alt="Click Launch Project" src="images/click_launch_project.png"/></a></p>
+</li>
+</ol>
+<h2 id="launch-the-price-regressor-monitoring-dashboard">Launch the Price Regressor Monitoring dashboard</h2>
+<ol start="7">
+<li>
+<p>Click <strong>Applications</strong> in the left-side menu
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_applications.png"><img alt="Click Applications" src="images/click_applications.png"/></a></p>
+</li>
+<li>
+<p>Click the application <strong>⋮</strong> menu
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_application_menu.png"><img alt="Click Application Menu" src="images/click_application_menu.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Application Details</strong>
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_application_details.png"><img alt="Click Application Details" src="images/click_application_details.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Settings</strong>
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_settings.png"><img alt="Click Settings" src="images/click_settings.png"/></a></p>
+</li>
+<li>
+<p>Change <strong>Kernel</strong> to <strong>Python 3.7</strong>
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/change_kernel.png"><img alt="Change Kernel" src="images/change_kernel.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Update Application</strong> button
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_update_application.png"><img alt="Click Update Application" src="images/click_update_application.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Applications</strong> in the left-side menu
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_applications_again.png"><img alt="Click Applications" src="images/click_applications_again.png"/></a></p>
+</li>
+<li>
+<p>Click the application <strong>⋮</strong> menu, and select <strong>Restart Application</strong>
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/restart_the_application.png"><img alt="Restart Application" src="images/restart_the_application.png"/></a></p>
+</li>
+<li>
+<p>Click Price Regressor Tile
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_price_regressor.png"><img alt="Click Price Regressor Tile" src="images/click_price_regressor.png"/></a></p>
+</li>
+</ol>
+<h2 id="explore-drift-and-variations-in-the-model-performance">Explore drift and variations in the model performance</h2>
+<ol start="16">
+<li>
+<p>Explore the Dashboard
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/explore_the_dashboard.png"><img alt="Explore the Dashboard" src="images/explore_the_dashboard.png"/></a></p>
+</li>
+<li>
+<p>Explore the three tabs at different dates</p>
+<ul>
+<li>Is data monotonously drifting?</li>
+<li>Is there Numerical Target Drift at any point?</li>
+<li>Are there any significant variations in the model performance?</li>
+</ul>
+</li>
+</ol>
+<h2 id="identify-the-file-that-creates-the-evidently-dashboard">Identify the file that creates the Evidently dashboard</h2>
+<h3 id="project-structure">Project Structure</h3>
+<div class="highlight"><pre><span></span><code>18.
+├── LICENSE
+├── README.md
+├── .project-metadata.yaml              # declarative specification for AMP logic
+├── apps
+│   ├── reports                         # folder to collect monitoring reports
+│   └── app.py                          # Flask app to serve monitoring reports
+├── cdsw-build.sh                       # build script for model endpoint
+├── data                                # directory to hold raw and working data artifacts
+├── requirements.txt
+├── scripts
+│   ├── install_dependencies.py         # commands to install python package dependencies
+│   ├── predict.py                      # inference script that utilizes cdsw.model_metrics
+│   ├── prepare_data.py                 # splits raw data into training and production sets
+│   ├── simulate.py                     # script that runs simulated production logic
+│   └── train.py                        # build and train an sklearn pipeline for regression
+├── setup.py
+└── src
+    ├── __init__.py
+    ├── api.py                          # utility class for working with CML APIv2
+    ├── inference.py                    # utility class for concurrent model requests
+    ├── simulation.py                   # utility class for simulation logic
+    └── utils.py                        # various utility functions
+</code></pre></div>
+<p>The Continuous Model Monitoring AMP project structure is above.  </p>
+<ol start="19">
+<li>
+<p>Select <strong>Models</strong> from the project menu, you see the Price Regressor model is deployed.  </p>
+</li>
+<li>
+<p>Click on the <strong>Price Regressor</strong> model.  </p>
+</li>
+<li>
+<p>Explore the model's properties. What file is the model based on? Which function is called?</p>
+</li>
+<li>
+<p>Click the <strong>Test</strong> button to test the model.  View the results.</p>
+</li>
+<li>
+<p>Click <strong>Files</strong> in the project menu.  Navigate to the <code>scripts/predict.py</code> file. Click the <strong>Open in Workbench</strong> button.</p>
+</li>
+<li>
+<p>Go to line 87 and examine the <code>cdsw.track_metric</code> call that is used to store the prediction metrics in the CML PostgreSQL metrics database.  </p>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Your CML workspace must have the <strong>Enable Model Metrics</strong> option selected when it is provisioned in order to track metrics.</p>
+</div>
+<p>The <code>src\simulation.py</code> file is the main simulation routine and mimics a production monitoring use case.</p>
+<p>This simulation assumes the Price Regressor model has already been deployed, and accepts that model name as input. The .run_simulation() method operates the main logic of this class.
+Namely, it:</p>
+<ul>
+<li>Scores all training data against the deployed model so we can query metrics
+    from the Model Metrics database for evaluation</li>
+<li>Initializes a simulation clock, which is just a list of date ranges from the
+    prod_df to iterate over. These batches mimic the cadence upon which new data
+    "arrives" in a production setting.</li>
+<li>For each simulation clock date_range, we:<ul>
+<li>Query the prod_df for newly <em>listed</em> records and score them using deployed model</li>
+<li>Query the prod_df for newly <em>sold</em> records and add ground truths to metric store</li>
+<li>Query the metric store for those newly <em>sold</em> records and generate new Evidently report</li>
+<li>Redeploy the hosted Application to surface the new monitoring report</li>
+</ul>
+</li>
+</ul>
+<ol start="25">
+<li>
+<p>Navigate to <code>src/simulation.py</code> and open the file in the Workbench Editor.</p>
+</li>
+<li>
+<p>Examine the <code>query_model_metrics</code> method on line 340.  This method reads the metrics stored in the CML model metric database.</p>
+</li>
+<li>
+<p>Examine the <code>build_evidently_reports</code> method on line 404.  This method builds the reports and saves them as HTML to be served by the Price Regressor Monitoring Dashboard application.</p>
+</li>
+<li>
+<p>Go to line 186 and examine how the simulation deploys the updated Price Regressor Monitoring Dashboard application upon simulation completion.  This is an example of using the CML API to deploy an application.  More details can be seen in the <code>src/api.py</code> file.</p>
+</li>
+</ol>
+<p><strong> End of Exercise </strong></p>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: Autoscaling, Performance, and GPU Settings" class="md-footer__link md-footer__link--prev" href="../autoscaling/index.html" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Previous
+              </span>
+              Autoscaling, Performance, and GPU Settings
+            </div>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      Cloudera Inc. 2023
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "..", "features": ["content.code.annotate"], "search": "../assets/javascripts/workers/search.5bf1dace.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+<script src="../assets/javascripts/bundle.078830c0.min.js"></script>
+<script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
+</html>

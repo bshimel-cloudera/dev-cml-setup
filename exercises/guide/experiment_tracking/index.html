@@ -1,0 +1,630 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Cloudera Education" name="author"/>
+<link href="../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.3.0, mkdocs-material-8.5.4" name="generator"/>
+<title>Experiment Tracking - DSCI-272: Predicting with Cloudera Machine Learning</title>
+<link href="../assets/stylesheets/main.80dcb947.min.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            
+                .gscrollbar-fixer { padding-right: 15px; }
+                .gdesc-inner { font-size: 0.75rem; }
+                body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+                body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+                body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
+                </style><script src="../assets/javascripts/glightbox.min.js"></script></head>
+<body data-md-color-accent="none" data-md-color-primary="none" data-md-color-scheme="default" dir="ltr">
+<script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#experiment-tracking">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="DSCI-272: Predicting with Cloudera Machine Learning" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="DSCI-272: Predicting with Cloudera Machine Learning">
+<img alt="logo" src="../assets/logo-cloudera-white.svg"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            DSCI-272: Predicting with Cloudera Machine Learning
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Experiment Tracking
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="none" data-md-color-media="" data-md-color-primary="none" data-md-color-scheme="default" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_2" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"></path></svg>
+</label>
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="pink" data-md-color-media="" data-md-color-primary="pink" data-md-color-scheme="slate" id="__palette_2" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"></path></svg>
+</label>
+</form>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="DSCI-272: Predicting with Cloudera Machine Learning" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="DSCI-272: Predicting with Cloudera Machine Learning">
+<img alt="logo" src="../assets/logo-cloudera-white.svg"/>
+</a>
+    DSCI-272: Predicting with Cloudera Machine Learning
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+        Home
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../introduction/index.html">
+        Introduction to CML on CDP
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../streamlit/index.html">
+        Streamlit on CML
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data_access/index.html">
+        Data - Access, Audit, and Mask
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data_visualization/index.html">
+        Visualize Duocar Data
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Experiment Tracking
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="index.html">
+        Experiment Tracking
+      </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-a-new-project-from-github">
+    Create a New Project from Github
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#view-code-and-run-job">
+    View Code and Run Job
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#creating-an-experiment">
+    Creating an Experiment
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#change-the-input-and-compare-runs">
+    Change the Input and Compare Runs
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#commit-the-changes-to-git">
+    Commit the Changes to Git
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../workbench/index.html">
+        Workbench Lecture and Exercises
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autoscaling/index.html">
+        Autoscaling, Performance, and GPU Settings
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../model_monitoring/index.html">
+        Continuous Model Monitoring with Evidently AI
+      </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-a-new-project-from-github">
+    Create a New Project from Github
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#view-code-and-run-job">
+    View Code and Run Job
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#creating-an-experiment">
+    Creating an Experiment
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#change-the-input-and-compare-runs">
+    Change the Input and Compare Runs
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#commit-the-changes-to-git">
+    Commit the Changes to Git
+  </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="experiment-tracking">Experiment Tracking</h1>
+<p>Tracking experiments is critical for knowing what parameters were used to generate a model and how the model is performing.  CML projects provide experiment tracking based on <a href="https://mlflow.org/docs/latest/index.html">MLflow</a> to make this task easier.  </p>
+<p>In this exercise, you will:</p>
+<ul>
+<li>use a Git repository to create your project,</li>
+<li>use the CML experiments feature to track a experiment, and</li>
+<li>commit the changes back to git.</li>
+</ul>
+<h2 id="create-a-new-project-from-github">Create a New Project from Github</h2>
+<ol>
+<li>
+<p>Navigate to your workspace.</p>
+</li>
+<li>
+<p>Click the <strong>New Project</strong> button.
+    <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/0-click_new_project.png"><img alt="click new project" src="images/0-click_new_project.png"/></a></p>
+</li>
+<li>
+<p>Enter <code>Experiments - Student #</code> for the project name.
+    <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/1-enter_project_name.png"><img alt="enter project name" src="images/1-enter_project_name.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Git</strong> under <strong>Initial Setup</strong>.
+    <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/2-click_git.png"><img alt="click git" src="images/2-click_git.png"/></a></p>
+</li>
+<li>
+<p>Enter the following for the <strong>Git URL</strong>:
+    <div class="highlight"><pre><span></span><code>https://github.com/bshimel-cloudera/edu-cml-on-cdp-experiments
+</code></pre></div>
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/3-enter_git_url.png"><img alt="enter git url" src="images/3-enter_git_url.png"/></a></p>
+</li>
+<li>
+<p>Select <strong>Python 3.9</strong> for the <strong>Kernel</strong>.
+    <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/4-select_python_kernel.png"><img alt="select python kernel" src="images/4-select_python_kernel.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Create Project</strong>.
+    <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/5-click_create_project.png"><img alt="click create project" src="images/5-click_create_project.png"/></a></p>
+<p>CML will now checkout the content from Github and add it to the project.</p>
+</li>
+</ol>
+<h2 id="view-code-and-run-job">View Code and Run Job</h2>
+<p>The next step is to look at the code and then run it.  Since this exercise is focused on the use of Experiments feature, the code is very simple.  There is a single file, <code>add.py</code>.  It takes a series of numbers and calculates the sum.  In this example, the numbers passed as arguments to the <code>add.py</code> program are acting as our parameters, the sum() function is acting as our machine learning model, and the <code>total</code> is serving as the prediction or model output.  Obviously, the "model" in this case will be 100% accurate, but it will allow the exploration of the Experiment tracking features of CML.</p>
+<ol start="8">
+<li>
+<p>View the file by selecting the <code>code</code> folder from the list of files.
+    <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/6-click_on_code.png"><img alt="click on code" src="images/6-click_on_code.png"/></a></p>
+</li>
+<li>
+<p>Click on the <code>python</code> folder, and then click on the <code>add.py</code> file.
+    <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/8-click_on_add.png"><img alt="click on add" src="images/8-click_on_add.png"/></a></p>
+</li>
+<li>
+<p>You can see that it is a very simple, three-line program.  Click <strong>Jobs</strong> in the left-side menu.
+    <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/9-click_on_jobs.png"><img alt="click on jobs" src="images/9-click_on_jobs.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>New Job</strong>.
+    <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/10-click_new_job.png"><img alt="click new job" src="images/10-click_new_job.png"/></a></p>
+</li>
+<li>
+<p>Name the new job <code>Add It Up</code>. Click the <strong>Browse</strong> folder.
+    <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/11-browse_for_script.png"><img alt="browse for script" src="images/11-browse_for_script.png"/></a></p>
+</li>
+<li>
+<p>Select the <code>add.py</code> file.
+    <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/12-click_select.png"><img alt="click select" src="images/12-click_select.png"/></a></p>
+</li>
+<li>
+<p>The program accepts a list of numbers, separated by spaces.  Enter something like <code>20 30</code> for the <strong>Arguments</strong>.
+    <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/13-enter_arguments.png"><img alt="enter arguments" src="images/13-enter_arguments.png"/></a></p>
+</li>
+<li>
+<p>Click <strong> Create Job</strong>.
+    <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/14-click_create_job.png"><img alt="click create job" src="images/14-click_create_job.png"/></a></p>
+</li>
+<li>
+<p>The new job is created, but not executed.  Click <strong>Run as me</strong> to execute the job.
+    <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/15-click_run_as_me.png"><img alt="click run as me" src="images/15-click_run_as_me.png"/></a></p>
+</li>
+<li>
+<p>Once the <strong>Status</strong> has changed to <code>Success</code>, click on the job name.
+    <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/16-click_job_name.png"><img alt="click job name" src="images/16-click_job_name.png"/></a></p>
+</li>
+<li>
+<p>The job overview is displayed.  Select the <strong>History</strong> tab.
+    <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/17-click_history.png"><img alt="click history" src="images/17-click_history.png"/></a></p>
+</li>
+<li>
+<p>A list of job runs is displayed. There should only be one job run at this point.  Click on the run.
+    <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/18-click_job_run.png"><img alt="click job run" src="images/18-click_job_run.png"/></a></p>
+</li>
+<li>
+<p>View the session output.  The sum of the arguments is displayed.
+    <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/19-view_session_output.png"><img alt="view session output" src="images/19-view_session_output.png"/></a></p>
+</li>
+</ol>
+<h2 id="creating-an-experiment">Creating an Experiment</h2>
+<ol start="21">
+<li>
+<p>Click <strong>Files</strong> in the left-side menu.
+    <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/21-click_files.png"><img alt="click files" src="images/21-click_files.png"/></a></p>
+</li>
+<li>
+<p>Navigate to <code>add.py</code> and click <strong>Open in Session</strong>.
+    <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/22-click_open_in_session.png"><img alt="click open in session" src="images/22-click_open_in_session.png"/></a></p>
+</li>
+<li>
+<p>The file is opened in the Workspace file editor.  An actual session is not needed to edit the file.<br/>
+    Edit the file to look as follows:
+    <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">mlflow</span>
+
+<span class="n">mlflow</span><span class="o">.</span><span class="n">set_experiment</span><span class="p">(</span><span class="s2">"Add It Up"</span><span class="p">)</span>
+<span class="n">mlflow</span><span class="o">.</span><span class="n">start_run</span><span class="p">()</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]]</span>
+<span class="n">total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+<span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="s2">"Input"</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+<span class="n">mlflow</span><span class="o">.</span><span class="n">log_metric</span><span class="p">(</span><span class="s2">"Sum"</span><span class="p">,</span> <span class="n">total</span><span class="p">)</span>
+
+<span class="nb">print</span> <span class="p">(</span><span class="sa">f</span><span class="s2">"The sum of the numbers is: </span><span class="si">{</span><span class="n">total</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="n">mlflow</span><span class="o">.</span><span class="n">end_run</span><span class="p">()</span>
+</code></pre></div>
+    Here is a brief description of the added lines:</p>
+<ul>
+<li>
+<p><code>import mlflow</code> - This line imports the mlflow module.</p>
+</li>
+<li>
+<p><code>mlflow.start_run()</code> - MLflow can track multiple runs.  In this case, only one run is tracked per execution.  This line marks the start of the run.</p>
+</li>
+<li>
+<p><code>mlflow.set_experiment("Add It Up")</code> - This line specifies which experiment to use.  If the experiment does not exist, it will be created.</p>
+</li>
+<li>
+<p><code>mlflow.log_param("Input", params)</code> - This line tracks the input parameters.</p>
+</li>
+<li>
+<p><code>mlflow.log_metric("Sum", total)</code> - This line tracks the output metrics.</p>
+</li>
+<li>
+<p><code>mlflow.end_run()</code> - This line marks the end of the run.</p>
+</li>
+</ul>
+<p>Click <strong>File</strong> and then <strong>Save</strong>.
+  <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/23-click_save.png"><img alt="click save" src="images/23-click_save.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Project</strong> to return to the project.
+      <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/24-click_project.png"><img alt="click project" src="images/24-click_project.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Jobs</strong> in the left-side menu.
+      <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/25-click_jobs.png"><img alt="click jobs" src="images/25-click_jobs.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Run as me</strong> to execute the job again.
+      <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/26-click_run_as_me.png"><img alt="click run as me" src="images/26-click_run_as_me.png"/></a></p>
+</li>
+<li>
+<p>Once the <strong>Status</strong> changes to <code>Success</code>, click on the job name.
+      <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/27-click_on_job.png"><img alt="click on job" src="images/27-click_on_job.png"/></a></p>
+</li>
+<li>
+<p>Click on the <strong>History</strong> tab.
+      <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/28-click_on_history.png"><img alt="click on history" src="images/28-click_on_history.png"/></a></p>
+</li>
+<li>
+<p>Click on the latest run.
+      <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/29-click_on_run.png"><img alt="click on run" src="images/29-click_on_run.png"/></a></p>
+</li>
+<li>
+<p>In the output, a message is displayed to notify you that a new experiment was created.  Click <strong>Experiments</strong> in the left-side menu.
+      <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/30-click_experiments.png"><img alt="click experiments" src="images/30-click_experiments.png"/></a></p>
+</li>
+<li>
+<p>Click on the newly created experiment.
+      <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/31-click_experiment.png"><img alt="click experiment" src="images/31-click_experiment.png"/></a></p>
+</li>
+<li>
+<p>Information about the experiment and a list of runs is displayed.  The parameters and metrics for the run are displayed.  Click on the run. 
+      <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/32-click_start_time.png"><img alt="click start time" src="images/32-click_start_time.png"/></a></p>
+</li>
+<li>
+<p>A more detailed view of the run is displayed.  Notice that in addition to the parameters and metrics, a run can have more information like notes, tags, and artifacts.
+      Click <strong>Files</strong> in the left-side menu.
+      <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/33-click_files.png"><img alt="click files" src="images/33-click_files.png"/></a></p>
+</li>
+<li>
+<p>Navigate to <code>add.py</code> and click <strong>Open in Session</strong>.
+      Add the following code to create a new metric called <code>count</code> and a new artifact, the <code>result.txt</code> file:
+      <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">mlflow</span>
+
+<span class="n">mlflow</span><span class="o">.</span><span class="n">set_experiment</span><span class="p">(</span><span class="s2">"Add It Up"</span><span class="p">)</span>
+<span class="n">mlflow</span><span class="o">.</span><span class="n">start_run</span><span class="p">()</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]]</span>
+<span class="n">count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>  
+<span class="n">total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">"result.txt"</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">output_file</span><span class="p">:</span>
+    <span class="n">output_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Input: </span><span class="si">{</span><span class="n">params</span><span class="si">}</span><span class="s2">,"</span><span class="p">)</span>
+    <span class="n">output_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Count: </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2">,"</span><span class="p">)</span>
+    <span class="n">output_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Sum: </span><span class="si">{</span><span class="n">total</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">output_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="s2">"Input"</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+<span class="n">mlflow</span><span class="o">.</span><span class="n">log_metric</span><span class="p">(</span><span class="s2">"Count"</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+<span class="n">mlflow</span><span class="o">.</span><span class="n">log_metric</span><span class="p">(</span><span class="s2">"Sum"</span><span class="p">,</span> <span class="n">total</span><span class="p">)</span>
+
+<span class="n">mlflow</span><span class="o">.</span><span class="n">log_artifact</span><span class="p">(</span><span class="s2">"result.txt"</span><span class="p">)</span>
+
+<span class="nb">print</span> <span class="p">(</span><span class="sa">f</span><span class="s2">"The sum of the numbers is: </span><span class="si">{</span><span class="n">total</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="n">mlflow</span><span class="o">.</span><span class="n">end_run</span><span class="p">()</span>
+</code></pre></div></p>
+<p>Here is a brief description of the added lines:
+  * <code>count = len(params)</code> - This is a new metric for tracking the number of numbers to sum.</p>
+<ul>
+<li>
+<p><code>with open("result.txt", "w") ...</code> - This line and the following four lines create a file (artifact) with the results of the run.</p>
+</li>
+<li>
+<p><code>mlflow.log_metric("Count", count)</code> - This line tracks the new count metric.</p>
+</li>
+<li>
+<p><code>mlflow.log_artifact("result.txt")</code> - This line tracks the new artifact.</p>
+</li>
+</ul>
+<p>Save the file and click <strong>Project</strong> to return to the project.</p>
+</li>
+<li>
+<p>Click <strong>Jobs</strong> in the left-side menu and click <strong>Run as me</strong> on the job.</p>
+</li>
+<li>
+<p>Click <strong>Experiments</strong> in the left-side menu and click the experiment in the list.</p>
+</li>
+<li>
+<p>Notice, the list of runs includes the new <strong>Count</strong> metric.  Click on the latest run.
+      <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/40-click_on_start_time.png"><img alt="click on start time" src="images/40-click_on_start_time.png"/></a></p>
+</li>
+<li>
+<p>The run details includes the new metric too. 
+      <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/41-view_metrics.png"><img alt="view metrics" src="images/41-view_metrics.png"/></a></p>
+</li>
+<li>
+<p>Scroll down, if needed, and view the Artifacts.  If the job recently completed, the Artifacts may not have updated.  Wait a minute and refresh the page, if you do not see the <code>result.txt</code> file in the list of Artifacts.
+      <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/42-view_artifacts.png"><img alt="view artifacts" src="images/42-view_artifacts.png"/></a></p>
+</li>
+</ol>
+<h2 id="change-the-input-and-compare-runs">Change the Input and Compare Runs</h2>
+<ol start="40">
+<li>
+<p>Click <strong>Jobs</strong> in the left-side menu and click the <code>Add It Up</code> job in the list.
+      <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/43-click_job_name.png"><img alt="click job name" src="images/43-click_job_name.png"/></a></p>
+</li>
+<li>
+<p>Click the <strong>Settings</strong> tab.
+      <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/44-click_settings.png"><img alt="click settings" src="images/44-click_settings.png"/></a></p>
+</li>
+<li>
+<p>Edit the Arguments to be something different, like <code>20 30 40</code>.
+      <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/45-edit_arguments.png"><img alt="edit arguments" src="images/45-edit_arguments.png"/></a></p>
+</li>
+<li>
+<p>Scroll down and click <strong>Update Job</strong>
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/46-click_update_job.png"><img alt="click update job" src="images/46-click_update_job.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Run as me</strong>.
+      <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/47-click_run_as_me.png"><img alt="click run as me" src="images/47-click_run_as_me.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Experiments</strong> in the left-side menu and click on the <code>Add It Up</code> experiment.</p>
+</li>
+<li>
+<p>Select last two runs by clicking the respective checkboxes.
+      <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/49-select_last_two_runs.png"><img alt="select last two runs" src="images/49-select_last_two_runs.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Compare</strong>.
+      <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/50-click_compare.png"><img alt="click compare" src="images/50-click_compare.png"/></a></p>
+</li>
+<li>
+<p>Compare the results of the two runs using the table at the top and the various plots.
+      <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/51-view_plots.png"><img alt="view plots" src="images/51-view_plots.png"/></a></p>
+</li>
+</ol>
+<h2 id="commit-the-changes-to-git">Commit the Changes to Git</h2>
+<p>Now that you have modified the <code>add.py</code> code to track metrics, you will commit the changes to git so they won't be lost.</p>
+<ol start="49">
+<li>
+<p>Click <strong>Sessions</strong> in the left-side menu and click <strong>New Session</strong>.
+      <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/52-click_sessions.png"><img alt="click sessions" src="images/52-click_sessions.png"/></a></p>
+</li>
+<li>
+<p>Enter a session name and click <strong>Start Session</strong>.
+      <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/53-click_start_session.png"><img alt="click start session" src="images/53-click_start_session.png"/></a></p>
+</li>
+<li>
+<p>Once the session has started, click the <strong>Terminal Access</strong> button.
+      <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/54-click_terminal.png"><img alt="click terminal" src="images/54-click_terminal.png"/></a></p>
+</li>
+<li>
+<p>Enter <code>git status</code> and press <strong>Enter</strong>.  You will see <code>add.py</code> has been modified.
+      <a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/55-git_status.png"><img alt="git status" src="images/55-git_status.png"/></a></p>
+</li>
+<li>
+<p>Add the file to git and commit the changes.
+      <div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>code/python/add.py
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>git commit -m "Added tracking to add.py"
+</code></pre></div>
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/56-git_add_and_commit.png"><img alt="git add and commit" src="images/56-git_add_and_commit.png"/></a></p>
+<p>Your file changes have been committed.  Normally, you would push the changes back to a remote repository.  However, in this case, you do not have permission to commit to the remote repository.</p>
+</li>
+</ol>
+<p><strong>End of Exercise</strong></p>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: Visualize Duocar Data" class="md-footer__link md-footer__link--prev" href="../data_visualization/index.html" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Previous
+              </span>
+              Visualize Duocar Data
+            </div>
+</div>
+</a>
+<a aria-label="Next: Workbench Lecture and Exercises" class="md-footer__link md-footer__link--next" href="../workbench/index.html" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Next
+              </span>
+              Workbench Lecture and Exercises
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      Cloudera Inc. 2023
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "..", "features": ["content.code.annotate"], "search": "../assets/javascripts/workers/search.5bf1dace.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+<script src="../assets/javascripts/bundle.078830c0.min.js"></script>
+<script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
+</html>

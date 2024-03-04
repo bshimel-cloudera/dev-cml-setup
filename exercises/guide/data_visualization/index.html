@@ -1,0 +1,667 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Cloudera Education" name="author"/>
+<link href="../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.3.0, mkdocs-material-8.5.4" name="generator"/>
+<title>Visualize Duocar Data - DSCI-272: Predicting with Cloudera Machine Learning</title>
+<link href="../assets/stylesheets/main.80dcb947.min.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            
+                .gscrollbar-fixer { padding-right: 15px; }
+                .gdesc-inner { font-size: 0.75rem; }
+                body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+                body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+                body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
+                </style><script src="../assets/javascripts/glightbox.min.js"></script></head>
+<body data-md-color-accent="none" data-md-color-primary="none" data-md-color-scheme="default" dir="ltr">
+<script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#visualize-duocar-data">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="DSCI-272: Predicting with Cloudera Machine Learning" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="DSCI-272: Predicting with Cloudera Machine Learning">
+<img alt="logo" src="../assets/logo-cloudera-white.svg"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            DSCI-272: Predicting with Cloudera Machine Learning
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Visualize Duocar Data
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="none" data-md-color-media="" data-md-color-primary="none" data-md-color-scheme="default" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_2" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"></path></svg>
+</label>
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="pink" data-md-color-media="" data-md-color-primary="pink" data-md-color-scheme="slate" id="__palette_2" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"></path></svg>
+</label>
+</form>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="DSCI-272: Predicting with Cloudera Machine Learning" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="DSCI-272: Predicting with Cloudera Machine Learning">
+<img alt="logo" src="../assets/logo-cloudera-white.svg"/>
+</a>
+    DSCI-272: Predicting with Cloudera Machine Learning
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+        Home
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../introduction/index.html">
+        Introduction to CML on CDP
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../streamlit/index.html">
+        Streamlit on CML
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data_access/index.html">
+        Data - Access, Audit, and Mask
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Visualize Duocar Data
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="index.html">
+        Visualize Duocar Data
+      </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-workload-password-if-needed">
+    Create Workload Password (if needed)
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-a-new-dataset">
+    Create a New Dataset
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-a-dashboard">
+    Create a Dashboard
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-filters">
+    Create Filters
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#share-the-dashboard">
+    Share the Dashboard
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../experiment_tracking/index.html">
+        Experiment Tracking
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../workbench/index.html">
+        Workbench Lecture and Exercises
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autoscaling/index.html">
+        Autoscaling, Performance, and GPU Settings
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../model_monitoring/index.html">
+        Continuous Model Monitoring with Evidently AI
+      </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-workload-password-if-needed">
+    Create Workload Password (if needed)
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-a-new-dataset">
+    Create a New Dataset
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-a-dashboard">
+    Create a Dashboard
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-filters">
+    Create Filters
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#share-the-dashboard">
+    Share the Dashboard
+  </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="visualize-duocar-data">Visualize Duocar Data</h1>
+<p>The Data Visualization application is good for exploring your data and sharing with others.  In this exercise, you will:</p>
+<ul>
+<li>use the Data Visualization application to make a connection to the data warehouse,</li>
+<li>and create a dashboard to explore the ride data.</li>
+</ul>
+<ol>
+<li>Open your CML workspace and click <strong>New Project</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_new_project.png"><img alt="Click New Project" src="images/click_new_project.png"/></a></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is not necessary to create a new project to use Data Visualization. In this case, each student is creating their own project in order to demonstrate some features which are project-wide.</p>
+</div>
+<ol start="2">
+<li>
+<p>Enter <code>Duocar X</code> for the project name, where X is your student number. Click <strong>Create Project</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_create_project.png"><img alt="Click Create Project" src="images/click_create_project.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Data</strong> in the project menu.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_data_1.png"><img alt="Click Data 1" src="images/click_data_1.png"/></a></p>
+</li>
+<li>
+<p>Data Discovery and Visualization is just an application.  The Data link in the project menu is just a convenient shortcut to launch and access the application. Click <strong>Launch Data Application</strong> to start the application.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_launch_data_application.png"><img alt="Click Launch Data Application" src="images/click_launch_data_application.png"/></a></p>
+</li>
+<li>
+<p>The Data application homepage has useful information to get started and shortcut to common and recently used items. 
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/data_application_home_1.png"><img alt="Data Application Home 1" src="images/data_application_home_1.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Datasets</strong> in the menu at the top of the application.l
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_datasets_1.png"><img alt="Click Datasets 1" src="images/click_datasets_1.png"/></a></p>
+</li>
+<li>
+<p>The Data application always contains a <code>samples</code> dataset.  Additional datasets are inherited from the project and CML workspace.  Click the data warehouse dataset.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_on_the_data_warehouse.png"><img alt="Click on the data warehouse" src="images/click_on_the_data_warehouse.png"/></a></p>
+</li>
+<li>
+<p>If this is your first time accessing a dataset, you will receive an error that Data application cannot read a list of databases.  This is because the Data application needs a Workload Password to access the data warehouse.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/error_cannot_read_databases.png"><img alt="Error Cannot Read Databases" src="images/error_cannot_read_databases.png"/></a></p>
+</li>
+</ol>
+<h2 id="create-workload-password-if-needed">Create Workload Password (if needed)</h2>
+<p>If you received an error on the prior step, continue to follow the instructions below.  If you did not receive an error, skip ahead to <a href="#create-a-new-dataset">create a new dataset</a>.</p>
+<ol start="9">
+<li>
+<p>Click the <strong>Main Menu</strong> in the upper left corner.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_main_menu.png"><img alt="Click Main Menu" src="images/click_main_menu.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Home</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/select_home.png"><img alt="Select Home" src="images/select_home.png"/></a></p>
+</li>
+<li>
+<p>Click on your username in the lower right corner.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_on_user.png"><img alt="Click on User" src="images/click_on_user.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Profile</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_profile.png"><img alt="Click Profile" src="images/click_profile.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Set Workload Password</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/_click_set_workload_password.png"><img alt=" Click Set Workload Password" src="images/_click_set_workload_password.png"/></a></p>
+</li>
+<li>
+<p>Enter your workload password and click <strong>Set Workload Password</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_set_workload_password.png"><img alt="Click Set Workload Password" src="images/click_set_workload_password.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>ML Workspaces</strong> in the left menu.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_ml_workspaces.png"><img alt="Click ML Workspaces" src="images/click_ml_workspaces.png"/></a></p>
+</li>
+<li>
+<p>Click your workspace.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_on_workspace.png"><img alt="Click on workspace" src="images/click_on_workspace.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>User Settings</strong> in the workspace menu on the left.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_user_settings.png"><img alt="Click User Settings" src="images/click_user_settings.png"/></a></p>
+</li>
+<li>
+<p>Click the <strong>Environment Variables</strong> tab.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_environment_variables.png"><img alt="Click Environment Variables" src="images/click_environment_variables.png"/></a></p>
+</li>
+<li>
+<p>Enter the workload password you just created and click <strong>Save</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/enter_workload_password_2.png"><img alt="Enter Workload Password 2" src="images/enter_workload_password_2.png"/></a></p>
+</li>
+</ol>
+<p>Now that your workload password has been set.  The <strong>Data Discovery and Visualization</strong> application needs to be restarted.</p>
+<ol start="20">
+<li>
+<p>Click <strong>Projects</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_projects.png"><img alt="Click Projects" src="images/click_projects.png"/></a></p>
+</li>
+<li>
+<p>Click the <strong>Duocar X</strong> project, where X is your student number.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_duocar_x.png"><img alt="Click Duocar X" src="images/click_duocar_x.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Applications</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_applications.png"><img alt="Click Applications" src="images/click_applications.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>⋮</strong> menu in the upper right corner of the <strong>Data Discovery and Visualization</strong> application.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_dot_menu.png"><img alt="Click Dot Menu" src="images/click_dot_menu.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Restart Application</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_restart_application.png"><img alt="Click Restart Application" src="images/click_restart_application.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>OK</strong> to confirm.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_ok_to_confirm.png"><img alt="Click OK to Confirm" src="images/click_ok_to_confirm.png"/></a></p>
+</li>
+<li>
+<p>Click the <strong>Data Discovery and Visualization</strong> application.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_on_data_application.png"><img alt="Click on Data Application" src="images/click_on_data_application.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Datasets</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_datasets_2.png"><img alt="Click Datasets 2" src="images/click_datasets_2.png"/></a></p>
+</li>
+<li>
+<p>Click on your data warehouse connection.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_on_data_warehouse_2.png"><img alt="Click on data warehouse 2" src="images/click_on_data_warehouse_2.png"/></a></p>
+</li>
+</ol>
+<h2 id="create-a-new-dataset">Create a New Dataset</h2>
+<ol start="29">
+<li>
+<p>Click <strong>New Dataset</strong>
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_on_new_dataset.png"><img alt="Click on New Dataset" src="images/click_on_new_dataset.png"/></a></p>
+</li>
+<li>
+<p>Enter <code>Duocar Joined</code> for the <strong>Dataset Title</strong>.  Select <code>duocar</code> as the database.  Select <code>joined</code> as the table.  Click <strong>Create</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_create_2.png"><img alt="Click Create 2" src="images/click_create_2.png"/></a></p>
+</li>
+<li>
+<p>Click the newly created dataset, <strong>Duocar Joined</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_duocar_joined.png"><img alt="Click Duocar Joined" src="images/click_duocar_joined.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Data Model</strong> in the <strong>Dataset Detail menu</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_data_model.png"><img alt="Click Data Model" src="images/click_data_model.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Show Data</strong>.  This is a quick test to verify the dataset is working and has data.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_show_data.png"><img alt="Click Show Data" src="images/click_show_data.png"/></a></p>
+</li>
+</ol>
+<h2 id="create-a-dashboard">Create a Dashboard</h2>
+<ol start="34">
+<li>
+<p>Click <strong>Visuals</strong> in the menu at the top of the application.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_visuals.png"><img alt="Click Visuals" src="images/click_visuals.png"/></a></p>
+</li>
+<li>
+<p>Click the <strong>New Dashboard</strong> button.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_new_dashboard.png"><img alt="Click New Dashboard" src="images/click_new_dashboard.png"/></a></p>
+</li>
+<li>
+<p>Enter <code>Ride Dashboard</code> for the title.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/enter_title.png"><img alt="Enter Title" src="images/enter_title.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Visuals</strong> in the <strong>DASH.</strong> menu on the right.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_new_visual_1.png"><img alt="Click New Visual 1" src="images/click_new_visual_1.png"/></a></p>
+</li>
+<li>
+<p>Click the <strong>Bar Chart</strong> icon.  The bar chart properties are displayed.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_bar_chart.png"><img alt="Click Bar Chart" src="images/click_bar_chart.png"/></a></p>
+</li>
+<li>
+<p>Drag <code>service</code> from the list of <strong>Dimensions</strong> and drop it in the <strong>X Axis</strong> field.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/drag_service.png"><img alt="Drag Service" src="images/drag_service.png"/></a></p>
+</li>
+<li>
+<p>Drag <code>Record Count</code> from the list of <strong>Measures</strong> and drop it in the <strong>Y Axis</strong> field.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/drag_record_count.png"><img alt="Drag Record Count" src="images/drag_record_count.png"/></a></p>
+</li>
+<li>
+<p>Click the <strong>Refresh Visual</strong> button.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_refresh_visual_1.png"><img alt="Click Refresh Visual 1" src="images/click_refresh_visual_1.png"/></a></p>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The first time you make a connection to the data, the data warehouse may need start.  This will cause the visual to take a long time to update as it is waiting for the data.  The next five steps check the status of the data warehouse and watch as it auto provisions pods and enters a running state.  If your visual updates quickly, you can skip these steps.</p>
+</div>
+<ol start="42">
+<li>
+<p>Click <strong>Main Menu</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_main_menu_2.png"><img alt="Click Main Menu 2" src="images/click_main_menu_2.png"/></a></p>
+</li>
+<li>
+<p>Right-click on <strong>Data Warehouse</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/right_click_data_warehouse.png"><img alt="Right Click Data Warehouse" src="images/right_click_data_warehouse.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Open in New Tab</strong> to open a new browser tab.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_open_in_new_tab.png"><img alt="Click Open in New Tab" src="images/click_open_in_new_tab.png"/></a></p>
+</li>
+<li>
+<p>If your data warehouse was previously suspended, it shows <strong>Starting</strong> as it is provisioning resources.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/data_warehouse_starting.png"><img alt="Data Warehouse Starting" src="images/data_warehouse_starting.png"/></a></p>
+</li>
+<li>
+<p>Once the data warehouse has provisioned its resources, the state will change to <strong>Running</strong>.  Close the browser tab and return to the tab with the <strong>Data Discovery and Visualization</strong> application.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/data_warehouse_running.png"><img alt="Data Warehouse Running" src="images/data_warehouse_running.png"/></a></p>
+</li>
+<li>
+<p>Enter <code>Rides by Service</code> as the title for the bar chart visual.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/enter_rides_by_service_title.png"><img alt="Enter Rides by Service Title" src="images/enter_rides_by_service_title.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Visuals</strong> in the <strong>DASH.</strong> menu on the right.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_visuals_2.png"><img alt="Click Visuals 2" src="images/click_visuals_2.png"/></a></p>
+</li>
+<li>
+<p>Click the <strong>New Visual</strong> button.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_new_visual_3.png"><img alt="Click New Visual 3" src="images/click_new_visual_3.png"/></a></p>
+</li>
+<li>
+<p>Click the <strong>Pie</strong> icon.  The pie chart properties are displayed.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_pie.png"><img alt="Click Pie" src="images/click_pie.png"/></a></p>
+</li>
+<li>
+<p>Drag <code>star_rating</code> from the list of <strong>Measures</strong> and drop it in the <strong>Dimension</strong> field.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/drag_star_rating.png"><img alt="Drag Star Rating" src="images/drag_star_rating.png"/></a></p>
+</li>
+<li>
+<p>Drag <code>Record Count</code> from the list of <strong>Measures</strong> and drop it in the <strong>Measure</strong> field.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/drag_record_count_3.png"><img alt="Drag Record Count 3" src="images/drag_record_count_3.png"/></a></p>
+</li>
+<li>
+<p>Enter <code>Star Rating</code> as the title for the pie chart visual.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/enter_star_rating_title.png"><img alt="Enter Star Rating Title" src="images/enter_star_rating_title.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Visuals</strong> in the <strong>DASH.</strong> menu on the right.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_visuals_4.png"><img alt="Click Visuals 4" src="images/click_visuals_4.png"/></a></p>
+</li>
+<li>
+<p>Click the <strong>New Visual</strong> button.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_new_visual_5.png"><img alt="Click New Visual 5" src="images/click_new_visual_5.png"/></a></p>
+</li>
+<li>
+<p>Click the <strong>Packed Bubbles</strong> icon.  The packed bubbles properties are displayed.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_packed_bubbles.png"><img alt="Click Packed Bubbles" src="images/click_packed_bubbles.png"/></a></p>
+</li>
+<li>
+<p>Drag <code>rider_student</code> from the list of <strong>Dimensions</strong> and drop it in the <strong>Dimension</strong> field.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/drag_rider_student.png"><img alt="Drag Rider Student" src="images/drag_rider_student.png"/></a></p>
+</li>
+<li>
+<p>Drag <code>Record Count</code> from the list of <strong>Measures</strong> and drop it in the <strong>Measure</strong> field.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/drag_record_count.png"><img alt="Drag Record Count" src="images/drag_record_count.png"/></a></p>
+</li>
+<li>
+<p>Enter <code>Student Riders</code> as the title for the packed bubbles visual.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/enter_student_riders_title.png"><img alt="Enter Student Riders Title" src="images/enter_student_riders_title.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Visuals</strong> in the <strong>DASH.</strong> menu on the right.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_visuals_6.png"><img alt="Click Visuals 6" src="images/click_visuals_6.png"/></a></p>
+</li>
+<li>
+<p>Click the <strong>New Visual</strong> button.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_new_visual_6.png"><img alt="Click New Visual 6" src="images/click_new_visual_6.png"/></a></p>
+</li>
+<li>
+<p>Click the <strong>Calendar Heatmap</strong> icon.  The calendar heatmap properties are displayed.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_calendar_heatmap.png"><img alt="Click Calendar Heatmap" src="images/click_calendar_heatmap.png"/></a></p>
+</li>
+<li>
+<p>Drag <code>date_time</code> from the list of <strong>Dimensions</strong> and drop it in the <strong>Date</strong> field.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/drag_date_time.png"><img alt="Drag Date Time" src="images/drag_date_time.png"/></a></p>
+</li>
+<li>
+<p>Drag <code>Record Count</code> from the list of <strong>Measures</strong> and drop it in the <strong>Measure</strong> field.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/drag_record_count.png"><img alt="Drag Record Count" src="images/drag_record_count.png"/></a></p>
+</li>
+<li>
+<p>Enter <code>Ride Heatmap by Date</code> as the title for the calendar heatmap visual
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/enter_ride_heatmap_by_date.png"><img alt="Enter Ride Heatmap by Date" src="images/enter_ride_heatmap_by_date.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Refresh Visual</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_refresh_visual_3.png"><img alt="Click Refresh Visual 3" src="images/click_refresh_visual_3.png"/></a></p>
+</li>
+<li>
+<p>Notice, there is an <strong>ⓘ</strong> icon displayed on the visual and only February has rides. Click the <strong>ⓘ</strong> icon.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_info_icon.png"><img alt="Click Info Icon" src="images/click_info_icon.png"/></a></p>
+</li>
+<li>
+<p>The default limit for the number of rows fetched is 5,000.  This is limiting the rides displayed to February. Click <strong>Settings</strong> in the right menu.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_settings.png"><img alt="Click Settings" src="images/click_settings.png"/></a></p>
+</li>
+<li>
+<p>Expand the <strong>Data</strong> category in the <strong>Visual Settings</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/expand_data.png"><img alt="Expand Data" src="images/expand_data.png"/></a></p>
+</li>
+<li>
+<p>Enter <code>50000</code> for the <strong>Maximum number of rows to fetch</strong>.  The heatmap will show data for February through April.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/enter_max_rows.png"><img alt="Enter Max Rows" src="images/enter_max_rows.png"/></a></p>
+</li>
+</ol>
+<h2 id="create-filters">Create Filters</h2>
+<p>Displaying the data is interesting but it is static.  In order to explore the data and find the answers to questions like, "What service do students prefer?", filters can be add to the dashboard to make it interactive.</p>
+<ol start="71">
+<li>
+<p>Click <strong>Filters</strong> in the right menu.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_filters.png"><img alt="Click Filters" src="images/click_filters.png"/></a></p>
+</li>
+<li>
+<p>Click <code>distance</code> in the list of <strong>Measures</strong>.  Notice, a distance filter is applied to the top of the dashboard.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_distance.png"><img alt="Click Distance" src="images/click_distance.png"/></a></p>
+</li>
+<li>
+<p>Click <code>rider_student</code> in the list of <strong>Dimensions</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_rider_student_2.png"><img alt="Click Rider Student 2" src="images/click_rider_student_2.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Save</strong> to save the dashboard.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_save.png"><img alt="Click Save" src="images/click_save.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>View</strong> to view the dashboard.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_view.png"><img alt="Click View" src="images/click_view.png"/></a></p>
+</li>
+<li>
+<p>Adjust distance sliders.  Do students take longer or shorter rides in general?
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/adjust_distance.png"><img alt="Adjust Distance" src="images/adjust_distance.png"/></a></p>
+</li>
+<li>
+<p>Reset the distance sliders.  Use the filter to select only student riders.  What day of the week has the most student riders in general?
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/filter_student_riders.png"><img alt="Filter Student Riders" src="images/filter_student_riders.png"/></a></p>
+</li>
+</ol>
+<h2 id="share-the-dashboard">Share the Dashboard</h2>
+<ol start="78">
+<li>
+<p>Click the <strong>⋯</strong> menu in the upper right corner of the dashboard.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_dot_menu_4.png"><img alt="Click Dot Menu 4" src="images/click_dot_menu_4.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Get URL</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_get_url.png"><img alt="Click Get URL" src="images/click_get_url.png"/></a></p>
+</li>
+<li>
+<p>The URL is displayed.  The URL can be used to share the dashboard with other users.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/url.png"><img alt="URL" src="images/url.png"/></a></p>
+</li>
+</ol>
+<p><strong>End of Exercise</strong></p>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: Data - Access, Audit, and Mask" class="md-footer__link md-footer__link--prev" href="../data_access/index.html" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Previous
+              </span>
+              Data - Access, Audit, and Mask
+            </div>
+</div>
+</a>
+<a aria-label="Next: Experiment Tracking" class="md-footer__link md-footer__link--next" href="../experiment_tracking/index.html" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Next
+              </span>
+              Experiment Tracking
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      Cloudera Inc. 2023
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "..", "features": ["content.code.annotate"], "search": "../assets/javascripts/workers/search.5bf1dace.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+<script src="../assets/javascripts/bundle.078830c0.min.js"></script>
+<script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
+</html>

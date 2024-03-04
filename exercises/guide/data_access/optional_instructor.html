@@ -1,0 +1,408 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Cloudera Education" name="author"/>
+<link href="../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.3.0, mkdocs-material-8.5.4" name="generator"/>
+<title>Optional instructor - DSCI-272: Predicting with Cloudera Machine Learning</title>
+<link href="../assets/stylesheets/main.80dcb947.min.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            
+                .gscrollbar-fixer { padding-right: 15px; }
+                .gdesc-inner { font-size: 0.75rem; }
+                body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+                body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+                body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
+                </style><script src="../assets/javascripts/glightbox.min.js"></script></head>
+<body data-md-color-accent="none" data-md-color-primary="none" data-md-color-scheme="default" dir="ltr">
+<script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#protected-information-setup-instructor-demo">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="DSCI-272: Predicting with Cloudera Machine Learning" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="DSCI-272: Predicting with Cloudera Machine Learning">
+<img alt="logo" src="../assets/logo-cloudera-white.svg"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            DSCI-272: Predicting with Cloudera Machine Learning
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Optional instructor
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="none" data-md-color-media="" data-md-color-primary="none" data-md-color-scheme="default" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_2" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"></path></svg>
+</label>
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="pink" data-md-color-media="" data-md-color-primary="pink" data-md-color-scheme="slate" id="__palette_2" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"></path></svg>
+</label>
+</form>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="DSCI-272: Predicting with Cloudera Machine Learning" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="DSCI-272: Predicting with Cloudera Machine Learning">
+<img alt="logo" src="../assets/logo-cloudera-white.svg"/>
+</a>
+    DSCI-272: Predicting with Cloudera Machine Learning
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+        Home
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../introduction/index.html">
+        Introduction to CML on CDP
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../streamlit/index.html">
+        Streamlit on CML
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="index.html">
+        Data - Access, Audit, and Mask
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data_visualization/index.html">
+        Visualize Duocar Data
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../experiment_tracking/index.html">
+        Experiment Tracking
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../workbench/index.html">
+        Workbench Lecture and Exercises
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autoscaling/index.html">
+        Autoscaling, Performance, and GPU Settings
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../model_monitoring/index.html">
+        Continuous Model Monitoring with Evidently AI
+      </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#protected-information-setup-instructor-demo">
+    Protected Information Setup - Instructor Demo
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#apply-ranger-policies-and-masking">
+    Apply Ranger Policies and Masking
+  </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1>Optional instructor</h1>
+<h2 id="protected-information-setup-instructor-demo">Protected Information Setup - Instructor Demo</h2>
+<p>Birth dates, especially the full birth date, have been determined to be PII.  The administrator (instructor) has been asked to find and hide all birth dates within the dataset.</p>
+<h3 id="apply-pii-classification">Apply PII Classification</h3>
+<ol>
+<li>
+<p>Click <strong>Data Catalog</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_data_catalog.png"><img alt="Click Data Catalog" src="images/click_data_catalog.png"/></a></p>
+</li>
+<li>
+<p>Search for all of the birth date fields.  Click in the search box and enter <code>*birth*</code>.  Four fields with birth in the name are displayed.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/search_for_birth.png"><img alt="Search for birth" src="images/search_for_birth.png"/></a></p>
+</li>
+<li>
+<p>Click <code>rider_birth_date</code> in the list of items.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_rider_birth_date.png"><img alt="Click rider birth date" src="images/click_rider_birth_date.png"/></a></p>
+</li>
+<li>
+<p>The details for the <code>rider_birth_date</code> are displayed. Click <strong>Add Classification</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_add_classification.png"><img alt="Click Add Classification" src="images/click_add_classification.png"/></a></p>
+</li>
+<li>
+<p>Click in the <strong>Search and Add</strong> field. 
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_search_and_add.png"><img alt="Click Search and Add" src="images/click_search_and_add.png"/></a></p>
+</li>
+<li>
+<p>Enter <code>PII</code> and click <strong>Create</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/enter_pii_click_create.png"><img alt="Enter PII Click Create" src="images/enter_pii_click_create.png"/></a></p>
+</li>
+<li>
+<p>Enter <code>PII</code> for <strong>Name</strong>.  Enter <code>Personally Identifiable Information</code> for <strong>Description</strong>.  Click <strong>Create</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/enter_pii_and_click_create.png"><img alt="Enter PII and Click Create" src="images/enter_pii_and_click_create.png"/></a></p>
+</li>
+<li>
+<p>The new PII classification is created.  However, it will not show as a choice yet.  Return to the search results by clicking <strong>Search</strong> in the left side menu.  Then, click <code>rider_birth_date</code>.  Click <strong>Add Classification</strong> and search for <code>PII</code>.</p>
+</li>
+<li>
+<p>Click the <strong>plus</strong> symbol next to <strong>PII</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_plus.png"><img alt="Click Plus" src="images/click_plus.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_save.png"><img alt="Click Save" src="images/click_save.png"/></a></p>
+</li>
+<li>
+<p>Return to the search results and repeat the process to add the PII classification the the remaining three birth date fields.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/return_to_search.png"><img alt="Return to Search" src="images/return_to_search.png"/></a></p>
+</li>
+</ol>
+<h2 id="apply-ranger-policies-and-masking">Apply Ranger Policies and Masking</h2>
+<p>Once the fields have been tagged as PII.  Ranger is used to limit access or mask the fields.</p>
+<ol start="12">
+<li>
+<p>Return to the Data Catalog Search page.  Click the <strong>Ranger</strong> button.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_ranger.png"><img alt="Click Ranger" src="images/click_ranger.png"/></a></p>
+</li>
+<li>
+<p>Select <strong>Tag Based Policies</strong> from the <strong>Access Manager</strong> menu.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/select_tag_based_policies.png"><img alt="Select Tag Based Policies" src="images/select_tag_based_policies.png"/></a></p>
+</li>
+<li>
+<p>Click the <strong>cm_tag</strong> link.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_cm_tag.png"><img alt="Click cm_tag" src="images/click_cm_tag.png"/></a></p>
+</li>
+<li>
+<p>Select the <strong>Masking</strong> tab.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/select_masking_tab.png"><img alt="Select Masking Tab" src="images/select_masking_tab.png"/></a></p>
+</li>
+<li>
+<p>Click the <strong>Add New Policy</strong> button. 
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_add_new_policy.png"><img alt="Click Add New Policy" src="images/click_add_new_policy.png"/></a></p>
+</li>
+<li>
+<p>Enter <code>Mask PII</code> for the <strong>Policy Name</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/enter_policy_name.png"><img alt="Enter Policy Name" src="images/enter_policy_name.png"/></a></p>
+</li>
+<li>
+<p>Select <code>PII</code> for the <strong>TAG</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/select_pii.png"><img alt="Select PII" src="images/select_pii.png"/></a></p>
+</li>
+<li>
+<p>Under <strong>Mask Conditions</strong>, select <code>public</code> for <strong>Select Group</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/select_public_group.png"><img alt="Select Public Group" src="images/select_public_group.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Add Permissions under </strong>Add Access Types**.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_add_access_type.png"><img alt="Click Add Access Type" src="images/click_add_access_type.png"/></a></p>
+</li>
+<li>
+<p>Select <strong>hive</strong> as the component.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/select_hive.png"><img alt="Select Hive" src="images/select_hive.png"/></a></p>
+</li>
+<li>
+<p>Click the <strong>Hive</strong> checkbox.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_to_select_hive.png"><img alt="Click To Select Hive" src="images/click_to_select_hive.png"/></a></p>
+</li>
+<li>
+<p>Click the checkmark button.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_checkmark.png"><img alt="Click Checkmark" src="images/click_checkmark.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Add Mask Type</strong> under <strong>Select Masking Options</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_add_mask_type.png"><img alt="Click Add Mask Type" src="images/click_add_mask_type.png"/></a></p>
+</li>
+<li>
+<p>Select <strong>Custom</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/select_custom.png"><img alt="Select Custom" src="images/select_custom.png"/></a></p>
+</li>
+<li>
+<p>Click the checkmark button.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_checkmark_2.png"><img alt="Click Checkmark 2" src="images/click_checkmark_2.png"/></a></p>
+</li>
+<li>
+<p>Enter <code>cast(mask(cast(to_date({col}) as date), 'x', 'x', 'x', -1, '1', 1, 0, -1) as timestamp)</code> into the custom mask field.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/enter_mask.png"><img alt="Enter Mask" src="images/enter_mask.png"/></a></p>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You may wonder why <strong>Custom</strong> was chosen instead of <strong>Date show only year</strong>.  The later only works with date fields.  The birth date fields in the duocar database are timestamp fields.  Had <strong>Data show only</strong> been chosen, the fields would have been set to Null, since the date value returned by the mask would not have matched the timestamp data type.  Therefore, a custom mask is used to cast the result to timestamp.</p>
+</div>
+<ol start="28">
+<li>Click <strong>Add</strong> to create the new policy.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_add.png"><img alt="Click Add" src="images/click_add.png"/></a></li>
+</ol>
+<p>The previous tag-based policy is sufficient to mask all of the date fields.  The custom mask will return the year.  The day and month will be set to <code>01</code>.  </p>
+<p>However, an additional resource policy will be created to demonstrate how resource policies work, how policies interact, and the potential effect of a policy on propagated classifications.  The following steps create a new resource-based Ranger policy that specifically masks the riders table birth_date field by returning NULL.</p>
+<ol start="29">
+<li>
+<p>Select <strong>Resource Based Policies</strong> from the <strong>Access Manager</strong> menu.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/select_resource_based_policies.png"><img alt="Select Resource Based Policies" src="images/select_resource_based_policies.png"/></a></p>
+</li>
+<li>
+<p>Click the <strong>Hadoop SQL</strong> link.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_hadoop_sql.png"><img alt="Click Hadoop SQL" src="images/click_hadoop_sql.png"/></a></p>
+</li>
+<li>
+<p>Select the <strong>Masking</strong> tab.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/select_masking_2.png"><img alt="Select Masking 2" src="images/select_masking_2.png"/></a></p>
+</li>
+<li>
+<p>Click the <strong>Add New Policy</strong> button.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_add_new_policy_2.png"><img alt="Click Add New Policy 2" src="images/click_add_new_policy_2.png"/></a></p>
+</li>
+<li>
+<p>Enter <code>Mask Rider Birth Date</code> for the <strong>Policy Name</strong>.  Select <code>duocar</code> as the <strong>Hive Database</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/select_duocar_database.png"><img alt="Select duocar database" src="images/select_duocar_database.png"/></a></p>
+</li>
+<li>
+<p>Select <code>riders</code> as the <strong>Hive Table</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/select_riders_table.png"><img alt="Select riders table" src="images/select_riders_table.png"/></a></p>
+</li>
+<li>
+<p>Select <code>birth_date</code> as the <strong>Hive Column</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/select_birth_date.png"><img alt="Select birth_date" src="images/select_birth_date.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Add Permissions</strong> under <strong>Access Types</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_add_permissions_2.png"><img alt="Click Add Permissions 2" src="images/click_add_permissions_2.png"/></a></p>
+</li>
+<li>
+<p>Check <code>select</code> and click the checkmark button.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/check_select_2.png"><img alt="Check Select 2" src="images/check_select_2.png"/></a></p>
+</li>
+<li>
+<p>Click the <strong>Select Masking Option</strong> link under <strong>Select Masking Options</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_select_masking_option_2.png"><img alt="Click Select Masking Option 2" src="images/click_select_masking_option_2.png"/></a></p>
+</li>
+<li>
+<p>Select <strong>Nullify</strong> and click the checkmark button.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_checkmark.png"><img alt="Click Checkmark" src="images/click_checkmark.png"/></a></p>
+</li>
+<li>
+<p>Select <code>public</code> under <strong>Select Group</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/select_public_group_2.png"><img alt="Select Public Group 2" src="images/select_public_group_2.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Add</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_add_2.png"><img alt="Click Add 2" src="images/click_add_2.png"/></a></p>
+</li>
+</ol>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      Cloudera Inc. 2023
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "..", "features": ["content.code.annotate"], "search": "../assets/javascripts/workers/search.5bf1dace.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+<script src="../assets/javascripts/bundle.078830c0.min.js"></script>
+<script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
+</html>

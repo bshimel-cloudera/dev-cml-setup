@@ -1,0 +1,531 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Cloudera Education" name="author"/>
+<link href="../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.3.0, mkdocs-material-8.5.4" name="generator"/>
+<title>Streamlit on CML - DSCI-272: Predicting with Cloudera Machine Learning</title>
+<link href="../assets/stylesheets/main.80dcb947.min.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            
+                .gscrollbar-fixer { padding-right: 15px; }
+                .gdesc-inner { font-size: 0.75rem; }
+                body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+                body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+                body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
+                </style><script src="../assets/javascripts/glightbox.min.js"></script></head>
+<body data-md-color-accent="none" data-md-color-primary="none" data-md-color-scheme="default" dir="ltr">
+<script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#streamlit-on-cml">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="DSCI-272: Predicting with Cloudera Machine Learning" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="DSCI-272: Predicting with Cloudera Machine Learning">
+<img alt="logo" src="../assets/logo-cloudera-white.svg"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            DSCI-272: Predicting with Cloudera Machine Learning
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Streamlit on CML
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="none" data-md-color-media="" data-md-color-primary="none" data-md-color-scheme="default" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_2" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"></path></svg>
+</label>
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="pink" data-md-color-media="" data-md-color-primary="pink" data-md-color-scheme="slate" id="__palette_2" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"></path></svg>
+</label>
+</form>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="DSCI-272: Predicting with Cloudera Machine Learning" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="DSCI-272: Predicting with Cloudera Machine Learning">
+<img alt="logo" src="../assets/logo-cloudera-white.svg"/>
+</a>
+    DSCI-272: Predicting with Cloudera Machine Learning
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+        Home
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../introduction/index.html">
+        Introduction to CML on CDP
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Streamlit on CML
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="index.html">
+        Streamlit on CML
+      </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#go-to-cml-workspace">
+    Go to CML Workspace
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-a-new-project-using-the-streamlit-amp">
+    Create a New Project Using the Streamlit AMP
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#explore-the-streamlit-project">
+    Explore the Streamlit Project
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#modify-the-application">
+    Modify the Application
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#delete-the-project">
+    Delete the Project
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#bonus">
+    Bonus
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data_access/index.html">
+        Data - Access, Audit, and Mask
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data_visualization/index.html">
+        Visualize Duocar Data
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../experiment_tracking/index.html">
+        Experiment Tracking
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../workbench/index.html">
+        Workbench Lecture and Exercises
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autoscaling/index.html">
+        Autoscaling, Performance, and GPU Settings
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../model_monitoring/index.html">
+        Continuous Model Monitoring with Evidently AI
+      </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#go-to-cml-workspace">
+    Go to CML Workspace
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-a-new-project-using-the-streamlit-amp">
+    Create a New Project Using the Streamlit AMP
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#explore-the-streamlit-project">
+    Explore the Streamlit Project
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#modify-the-application">
+    Modify the Application
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#delete-the-project">
+    Delete the Project
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#bonus">
+    Bonus
+  </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="streamlit-on-cml">Streamlit on CML</h1>
+<p>"<a href="https://streamlit.io/">Streamlit</a> turns data scripts into shareable web apps in minutes."  Streamlit is a web application framework that allows data scientists to quickly build web applications to share data and analytics.  </p>
+<p>In this exercise, you will use an AMP (Applied ML Prototype) to deploy a simple Streamlit application using CML. You will learn how to deploy an AMP and how applications work in CML.</p>
+<h2 id="go-to-cml-workspace">Go to CML Workspace</h2>
+<p>Begin the exercise by nagivating to your workspace.</p>
+<ol>
+<li>
+<p>Click <strong>Machine Learning</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_on_machine_learning.png"><img alt="Click on Machine Learning" src="images/click_on_machine_learning.png"/></a></p>
+</li>
+<li>
+<p>Select the workspace.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/select_the_workspace.png"><img alt="Select the workspace" src="images/select_the_workspace.png"/></a></p>
+</li>
+</ol>
+<h2 id="create-a-new-project-using-the-streamlit-amp">Create a New Project Using the Streamlit AMP</h2>
+<p>Creating a project from an AMP is easy.</p>
+<ol start="3">
+<li>Click <strong>AMPs</strong> in the workspace menu.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_on_amps.png"><img alt="Click on AMPs" src="images/click_on_amps.png"/></a></li>
+</ol>
+<p>You will see a catalog of AMPs.  New AMPs are being added all of the time.  In addition to AMPs provided by Cloudera, you can <a href="https://docs.cloudera.com/machine-learning/cloud/applied-ml-prototypes/topics/ml-amp-create-new-amp.html">create your own AMPs</a> and your own <a href="https://docs.cloudera.com/machine-learning/cloud/applied-ml-prototypes/topics/ml-amp-custom-amp-catalog.html">AMP catalog</a>.</p>
+<ol start="4">
+<li>Click the <strong>Streamlit</strong> tile.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_on_streamlit.png"><img alt="Click on Streamlit" src="images/click_on_streamlit.png"/></a></li>
+</ol>
+<p>A dialog will popup that describes the AMP.  The dialog also contains a link to the Github repository for the AMP.  Viewing an AMP's repository is a good way to learn more about the AMP and how AMPs are created, in general.</p>
+<ol start="5">
+<li>
+<p>Click <strong>View on Github</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_view_on_github.png"><img alt="Click View on Github" src="images/click_view_on_github.png"/></a></p>
+</li>
+<li>
+<p>Click the <code>project-metadata.yaml</code> file.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_on_project_metadata_yaml.png"><img alt="Click on project-metadata.yaml" src="images/click_on_project_metadata_yaml.png"/></a></p>
+</li>
+</ol>
+<p>In the project-metadata.yaml file, you can see the steps that are used to deploy the AMP.  In this case, you can see that AMP runs a session to install the Python dependecies and then starts a new application called Streamlit App.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Streamlit</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run a Streamlit app inside CML.</span>
+<span class="nt">author</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cloudera Inc.</span>
+<span class="nt">specification_version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span>
+<span class="nt">prototype_version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.0</span>
+<span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="s">"2023-03-24"</span>
+
+<span class="nt">runtimes</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">editor</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Workbench</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">kernel</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Python 3.9</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">edition</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Standard</span>
+
+<span class="nt">tasks</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">run_session</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install Dependencies</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">script</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cml/install_dependencies.py</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">kernel</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python3</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">cpu</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">memory</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">start_application</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Streamlit App</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">subdomain</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">streamlit</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">script</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cml/launch_app.py</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">short_summary</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Start Streamlit application</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">environment_variables</span><span class="p p-Indicator">:</span>
+<span class="w">    </span><span class="nt">TASK_TYPE</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">START_APPLICATION</span>
+</code></pre></div>
+<ol start="7">
+<li>
+<p>Close the Github tab and return to the AMP dialog.  Click the <strong>Configure Project</strong> button.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_configure_project.png"><img alt="Click Configure Project" src="images/click_configure_project.png"/></a></p>
+</li>
+<li>
+<p>Disable Spark, if enabled.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/disable_spark.png"><img alt="Disable Spark" src="images/disable_spark.png"/></a></p>
+</li>
+<li>
+<p>Click the <strong>Launch Project</strong> button.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_launch_project.png"><img alt="Click Launch Project" src="images/click_launch_project.png"/></a></p>
+</li>
+</ol>
+<p>The AMP will begin building.  You will see the two steps that were in the <code>project-metadata.yaml</code> file execute.</p>
+<ol start="10">
+<li>Wait for AMP to complete.  It will take approximately five minutes for the AMP to complete both steps.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/wait_for_amp_to_complete.png"><img alt="Wait for AMP to complete" src="images/wait_for_amp_to_complete.png"/></a></li>
+</ol>
+<h2 id="explore-the-streamlit-project">Explore the Streamlit Project</h2>
+<p>Now that the AMP has completed creating a new project, you can view the contents of the project to see what was created.</p>
+<ol start="11">
+<li>Click <strong>Overview</strong> in the project menu.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_overview.png"><img alt="Click Overview" src="images/click_overview.png"/></a></li>
+</ol>
+<p>The project overview shows any models or jobs that were created, the files contained in the project, and the contents of the <code>README.md</code> markdown file which describe the project.  At the top of the overview page is the message regarding the project creation status which contains a useful link to the return to the project creation status page.</p>
+<ol start="12">
+<li>
+<p>Click <strong>View status page</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_view_status_page.png"><img alt="Click View status page" src="images/click_view_status_page.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>View details</strong> for Step 2 - Start Streamlit Application.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_view_details.png"><img alt="Click View details" src="images/click_view_details.png"/></a></p>
+</li>
+</ol>
+<p>A new tab will open with an overview of the application deployment.  The overview provides a link to the application, the script that created the application, and when the application was last started.</p>
+<ol start="14">
+<li>
+<p>Click the <strong>Logs</strong> tab.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_logs.png"><img alt="Click Logs" src="images/click_logs.png"/></a></p>
+</li>
+<li>
+<p>View the log output.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/view_logs.png"><img alt="View Logs" src="images/view_logs.png"/></a></p>
+</li>
+</ol>
+<p>Logs shows the output from the application.  In this case, you can see the command that was used to start the application:</p>
+<div class="highlight"><pre><span></span><code>!streamlit run app.py --server.port $CDSW_APP_PORT --server.address 127.0.0.1
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>CML applications are long-running web applications.  Unlike sessions, applications do not timeout from inactivity.  The application must use either <code>CDSW_APP_PORT</code> or <code>CDSW_READONLY_PORT</code> as its server port.</p>
+</div>
+<ol start="16">
+<li>
+<p>Click <strong>Files</strong> in the project menu.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_files.png"><img alt="Click Files" src="images/click_files.png"/></a></p>
+</li>
+<li>
+<p>Click the <code>CML</code> folder.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_cml_folder.png"><img alt="Click CML folder" src="images/click_cml_folder.png"/></a></p>
+</li>
+<li>
+<p>Click <code>launch_app.py</code>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_launch_app_py.png"><img alt="Click launch_app.py" src="images/click_launch_app_py.png"/></a></p>
+</li>
+</ol>
+<p>This is the file that was used to start the application.  If you look back at the <code>project-metadata.yaml</code> file, you will see where it was specified in the <code>start_application</code> task.</p>
+<ol start="19">
+<li>Click <strong>Sessions</strong> in the project menu.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_sessions.png"><img alt="Click Sessions" src="images/click_sessions.png"/></a></li>
+</ol>
+<p>This is a list of all of the project sessions.  Here, you can see the session used by the AMP to install the Python dependencies.</p>
+<ol start="20">
+<li>Click <strong>Install Dependencies</strong> in the list of sessions.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_install_dependencies.png"><img alt="Click Install Dependencies" src="images/click_install_dependencies.png"/></a></li>
+</ol>
+<p>Again, you see the output of the session. Similarly, you can view the application created by the AMP.</p>
+<ol start="21">
+<li>
+<p>Click <strong>Applications</strong> in the project menu.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_applications.png"><img alt="Click Applications" src="images/click_applications.png"/></a></p>
+</li>
+<li>
+<p>Click <strong>Streamlit App</strong>.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_streamlit_app.png"><img alt="Click Streamlit App" src="images/click_streamlit_app.png"/></a></p>
+</li>
+</ol>
+<p>This opens a new tab and displays the application.  The URL can be shared and viewed by others.  By default, authentication for applications is enforced on all ports and users cannot create public applications. If desired, the Admin user can allow users to create public applications that can be accessed by unauthenticated users.  Therefore, users will typically have to sign into the CDP environment before opening an application's URL.</p>
+<ol start="23">
+<li>View Streamlit App.
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/view_streamlit_app.png"><img alt="View Streamlit App" src="images/view_streamlit_app.png"/></a></li>
+</ol>
+<h2 id="modify-the-application">Modify the Application</h2>
+<ol start="24">
+<li>
+<p>Return to the Streamlit project.</p>
+</li>
+<li>
+<p>Click <strong>Files</strong> in the project menu.</p>
+</li>
+<li>
+<p>Compare the <code>app.py</code> code to the output of the app itself.</p>
+</li>
+<li>
+<p>Click the <strong>Open in Workbench</strong> button.  </p>
+</li>
+<li>
+<p>Change some of the markdown content and reload the app.</p>
+</li>
+<li>
+<p>Did you need to rebuild the app?</p>
+</li>
+<li>
+<p>Why is the first markdown block statement in a <code>st.markdown</code> call and not the second one?</p>
+</li>
+<li>
+<p>Study the <code>jointplot</code> seaborn function: <a href="https://seaborn.pydata.org/generated/seaborn.jointplot.html">https://seaborn.pydata.org/generated/seaborn.jointplot.html</a></p>
+</li>
+<li>
+<p>Change the type of the <code>jointplot</code>.</p>
+</li>
+</ol>
+<h2 id="delete-the-project">Delete the Project</h2>
+<ol start="33">
+<li>
+<p>Click Project Settings
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_project_settings.png"><img alt="Click Project Settings" src="images/click_project_settings.png"/></a></p>
+</li>
+<li>
+<p>Click Delete Project tab
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_delete_project_tab.png"><img alt="Click Delete Project tab" src="images/click_delete_project_tab.png"/></a></p>
+</li>
+<li>
+<p>Click Delete Project button
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_delete_project_button.png"><img alt="Click Delete Project button" src="images/click_delete_project_button.png"/></a></p>
+</li>
+<li>
+<p>Click OK to confirm
+<a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="images/click_ok_to_confirm.png"><img alt="Click OK to confirm" src="images/click_ok_to_confirm.png"/></a></p>
+</li>
+</ol>
+<h2 id="bonus">Bonus</h2>
+<p>If you finish early, explore other AMPs in the AMP catalog.</p>
+<p><strong>End of Exercise</strong></p>
+<p><a href="solution.html">Solution</a></p>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: Introduction to CML on CDP" class="md-footer__link md-footer__link--prev" href="../introduction/index.html" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Previous
+              </span>
+              Introduction to CML on CDP
+            </div>
+</div>
+</a>
+<a aria-label="Next: Data - Access, Audit, and Mask" class="md-footer__link md-footer__link--next" href="../data_access/index.html" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Next
+              </span>
+              Data - Access, Audit, and Mask
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      Cloudera Inc. 2023
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "..", "features": ["content.code.annotate"], "search": "../assets/javascripts/workers/search.5bf1dace.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+<script src="../assets/javascripts/bundle.078830c0.min.js"></script>
+<script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
+</html>
