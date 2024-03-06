@@ -1,5 +1,17 @@
 #!/bin/bash
 
+#set -e
+
+set -eE -o functrace
+
+failure() {
+  local lineno=$1
+  local msg=$2
+  echo "Failed at $lineno: $msg"
+}
+trap 'failure ${LINENO} "$BASH_COMMAND"' ERR
+
+
 setup_environment() {
 	# Base directory for training materials used in the Developer course
 	SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
@@ -17,34 +29,37 @@ setup_environment() {
 	echo "HIVE_EXT = $HIVE_EXT"
 	echo "PRINCIPAL = $PRINCIPAL"
 	echo "DATALAKE = $DATALAKE"
+  echo " End of setup_environment"
 }
+
 
 download_duocar_data_from_s3() {
 	# Download the zipped DuoCar data from S3 and unzip
 	cd ~
 	curl -s $S3_DATA/duocar.zip --output ./duocar.zip
-	rm -r -f duocar
+
+	rm -r -f duocar || true
 	mkdir duocar
 	unzip duocar.zip -d ~/duocar/
 
     # Download the Earcloud data from S3 and unzip
 	cd ~
 	curl -s $S3_DATA/earcloud.zip --output ./earcloud.zip
-	rm -r -f earcloud
+	rm -r -f earcloud || true
 	unzip earcloud.zip
 
 	# Copy demographics data
-	hdfs dfs -rm -r -skipTrash $HIVE_EXT/data
+	hdfs dfs -rm -r -skipTrash $HIVE_EXT/data || true
 	hdfs dfs -mkdir -p $HIVE_EXT/data
 	curl -s $S3_DATA/demographics.txt --output ./demographics.txt
-	hdfs dfs -put ./demographics.txt $HIVE_EXT/data
+	hdfs dfs -put ./demographicsss.txt $HIVE_EXT/data
+  echo "End of download_duocar_data_from_s3"
 }
 
 copy_duocar_data_to_hdfs() {
-	
 	export HADOOP_USER_NAME="hdfs"
 	# Delete all existing data and subdirectories in the /duocar directory in HDFS
-	hdfs dfs -rm -r -skipTrash $HIVE_EXT/duocar
+	hdfs dfs -rm -r -skipTrash $HIVE_EXT/duocar || true
 	# Recreate the directories in /duocar
 	hdfs dfs -mkdir -p $HIVE_EXT/duocar/raw/drivers
 	hdfs dfs -mkdir -p $HIVE_EXT/duocar/raw/riders
@@ -72,6 +87,7 @@ copy_duocar_data_to_hdfs() {
 	cd ~
 	hdfs dfs -put ~/earcloud $HIVE_EXT/duocar
   unset HADOOP_USER_NAME
+  echo "End of copy_duocar_data_to_hdfs"
 }
 
 clean_duocar_data() {
@@ -85,6 +101,7 @@ clean_duocar_data() {
 	export HADOOP_USER_NAME="hdfs"
 	spark-submit cml/clean_data.py $DATALAKE $HIVE_EXT
 	unset HADOOP_USER_NAME
+  echo "End of clean_duocar_data"
 }
 
 join_duocar_data() {
@@ -94,6 +111,8 @@ join_duocar_data() {
 	export HADOOP_USER_NAME="hdfs"
 	spark-submit cml/join_data.py $DATALAKE $HIVE_EXT
 	unset HADOOP_USER_NAME
+  echo "End of join_duocar_data"
+
 }
 
 create_duocar_hive_tables() {
@@ -101,7 +120,7 @@ create_duocar_hive_tables() {
 	cd ~
 	export HADOOP_USER_NAME="hdfs"
   # Remove any existing data in Hive’s duocar storage directory
-	hdfs dfs -rm -r -skipTrash $HIVE_EXT/duocar.db
+	hdfs dfs -rm -r -skipTrash $HIVE_EXT/duocar.db || true
 	# Submit the Hive loading script to Spark
 	spark-submit cml/hive_data.py $DATALAKE $HIVE_EXT
 	unset HADOOP_USER_NAME
@@ -109,6 +128,8 @@ create_duocar_hive_tables() {
 	# impala-shell -i worker-1:21000 -q 'INVALIDATE METADATA'
 	# Protect the tables in the duocar database from being dropped
 	# beeline -u jdbc:hive2://master-1:10000/duocar -e "ALTER TABLE drivers ENABLE NO_DROP;ALTER TABLE riders ENABLE NO_DROP;ALTER TABLE rides ENABLE NO_DROP;ALTER TABLE ride_reviews ENABLE NO_DROP;ALTER TABLE joined ENABLE NO_DROP;"
+  echo "End of create_duocar_hive_tables"
+
 }
 
 create_nycflights13_hive_tables() {
@@ -117,13 +138,13 @@ create_nycflights13_hive_tables() {
 	aws s3 cp s3://cloudera-training-materials/CDSW/airlines.txt .
 	aws s3 cp s3://cloudera-training-materials/CDSW/flights.parquet .
 	# Delete the /user/hive/warehouse/airlines directory in HDFS and any existing data in it
-	hdfs dfs -rm -r -skipTrash /user/hive/warehouse/airlines
+	hdfs dfs -rm -r -skipTrash /user/hive/warehouse/airlines || true
 	# Create the directory /user/hive/warehouse/airlines in HDFS
 	hdfs dfs -mkdir -p /user/hive/warehouse/airlines
 	# Upload airlines.txt to the directory
 	hdfs dfs -put airlines.txt /user/hive/warehouse/airlines/
 	# Delete the /user/hive/warehouse/flights directory in HDFS and any existing data in it
-	hdfs dfs -rm -r -skipTrash /user/hive/warehouse/flights
+	hdfs dfs -rm -r -skipTrash /user/hive/warehouse/flights || true
 	# Create the directory /user/hive/warehouse/flights in HDFS
 	hdfs dfs -mkdir -p /user/hive/warehouse/flights
 	# Upload flights.parquet to the directory
@@ -142,31 +163,105 @@ create_nycflights13_hive_tables() {
 	impala-shell -i worker-1:21000 -f flights.sql
 	# Protect the airlines and flights tables from being dropped:
 	beeline -u jdbc:hive2://master-1:10000 -e "ALTER TABLE flights ENABLE NO_DROP;ALTER TABLE airlines ENABLE NO_DROP;"
+  echo "End of create_nycflights13_hive_tables"
+
 }
 
 cleanup_local_data() {
 	cd ~
-	rm duocar.zip
-	rm -rf duocar
+	rm duocar.zip || true
+	rm -rf duocar || true
 
-	rm earcloud.zip
-	rm -rf earcloud
+	rm earcloud.zip || true
+	rm -rf earcloud || true
 
 	echo "export S3_ROOT=\"$HIVE_EXT\"" >>.bash_profile
+  echo "End of cleanup_local_data"
+
 }
 
 create_python_environment() {
 	echo "S3_ROOT = \"$HIVE_EXT\"" >env.py
 	echo "S3_HOME = \"$S3_ROOT/user/$PRINCIPAL\"" >>env.py
 	echo "CONNECTION_NAME = \"$DATALAKE\"" >>env.py
+  echo "End of create_python_environment"
 }
 
 setup_environment
+if [[ $? -eq 0 ]]; then
+    echo "setup_environment succeeded"
+    
+else
+    echo "setup_environment failed"
+    exit
+fi
+
 download_duocar_data_from_s3
+if [[ $? -eq 0 ]]; then
+    echo "download_duocar_data_from_s3 succeeded"
+    
+else
+    echo "download_duocar_data_from_s3 failed"
+    exit
+fi
+
 copy_duocar_data_to_hdfs
+if [[ $? -eq 0 ]]; then
+    echo "copy_duocar_data_to_hdfs succeeded"
+else
+    echo "copy_duocar_data_to_hdfs failed"
+    exit
+fi
+
 clean_duocar_data
+if [[ $? -eq 0 ]]; then
+    echo "clean_duocar_data succeeded"
+    
+else
+    echo "clean_duocar_data failed"
+    exit
+fi
+
 join_duocar_data
+if [[ $? -eq 0 ]]; then
+    echo "join_duocar_data succeeded"
+    
+else
+    echo "join_duocar_data failed"
+    exit
+fi
+
 create_duocar_hive_tables
-# create_nycflights13_hive_tables
+if [[ $? -eq 0 ]]; then
+    echo "create_duocar_hive_tables succeeded"
+    
+else
+    echo "create_duocar_hive_tables failed"
+    exit
+fi
+
+#create_nycflights13_hive_tables
+#if [[ $? -eq 0 ]]; then
+#    echo "create_nycflights13_hive_tables succeeded"
+#else
+#    echo "create_nycflights13_hive_tables failed"
+#    exit
+#fi
+
 cleanup_local_data
+if [[ $? -eq 0 ]]; then
+    echo "cleanup_local_data succeeded"
+    
+else
+    echo "cleanup_local_data failed"
+    exit
+fi
+
 create_python_environment
+if [[ $? -eq 0 ]]; then
+    echo "create_python_environment succeeded"
+    
+else
+    echo "create_python_environment failed"
+    exit
+fi
