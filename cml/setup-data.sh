@@ -52,7 +52,7 @@ download_duocar_data_from_s3() {
 	hdfs dfs -rm -r -skipTrash $HIVE_EXT/data || true
 	hdfs dfs -mkdir -p $HIVE_EXT/data
 	curl -s $S3_DATA/demographics.txt --output ./demographics.txt
-	hdfs dfs -put ./demographicsss.txt $HIVE_EXT/data
+	hdfs dfs -put ./demographics.txt $HIVE_EXT/data
   echo "End of download_duocar_data_from_s3"
 }
 
