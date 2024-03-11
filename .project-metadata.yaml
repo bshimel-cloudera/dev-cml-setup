@@ -27,7 +27,15 @@ tasks:
     kernel: python3
     cpu: 1
     memory: 2
-
+    
+  - type: run_session
+    name: Test Exercise
+    short_summary: Test Exercise
+    script: exercises/code/python/00_cml.py
+    kernel: python3
+    cpu: 1
+    memory: 2
+    
   - type: start_application
     name: Exercise Guide App
     subdomain: ml-on-cdp
