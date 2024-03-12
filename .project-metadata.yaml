@@ -31,7 +31,7 @@ tasks:
   - type: run_session
     name: Test Exercise
     short_summary: Test Exercise
-    script: exercises/code/python/00_cml.py
+    script: exercises/code/python/run_exercise.py
     kernel: python3
     cpu: 1
     memory: 2
