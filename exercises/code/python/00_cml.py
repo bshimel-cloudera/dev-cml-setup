@@ -36,7 +36,7 @@ sns.pairplot(iris, hue="species")
 
 help(expit)
 
-#expit?
+expit?
 
 #expit??
 
@@ -47,19 +47,17 @@ help(expit)
 # Run a Linux command by using the `!` prefix.
 
 # Print the current working directory:
-#!pwd
-pwd
+!pwd
+
 
 # **Note:** All CML Native Workbench users have the username `cdsw`.
 
 # List the contents of the current directory:
-#!ls -l
-ls -l
+!ls -l
 
 # List the contents of the `/duocar` directory in the Hadoop Distributed File
 # System (HDFS):
-#!hdfs dfs -ls $S3_ROOT/duocar
-hdfs dfs -ls $S3_ROOT/duocar
+!hdfs dfs -ls $S3_ROOT/duocar
 
 # You can also access the command line via the **Terminal access** menu item.
 
@@ -71,19 +69,16 @@ hdfs dfs -ls $S3_ROOT/duocar
 # **Important:** Packages are managed on a project-by-project basis.
 
 # Get a list of the currently installed packages:
-#!pip3 list
-pip3 list
+!pip3 list
 
 # Install a new package:
-#!pip3 install folium
-pip3 install folium
+!pip3 install folium
 
 # **Note:** This package is now available in all future sessions launched in
 # this project.
 
 # Show details about the installed package:
-#!pip3 show folium
-pip3 show folium
+!pip3 show folium
 
 # **Note:**  This returns nothing if the package is not installed.
 
