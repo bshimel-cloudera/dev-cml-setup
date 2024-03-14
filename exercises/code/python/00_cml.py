@@ -36,7 +36,7 @@ sns.pairplot(iris, hue="species")
 
 help(expit)
 
-expit?
+#expit?
 
 #expit??
 
